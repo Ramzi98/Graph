@@ -17,7 +17,7 @@ public class Graf {
                 {
                     List<Node> emptyList = new ArrayList<>();
                     adjList.put(new Node(sourceNoude,""),emptyList);
-                    System.out.println("Noued ajouter"+sourceNoude);
+                    System.out.println("Noued add : ID = "+sourceNoude);
                 }
                 sourceNoude++;
                 continue;
@@ -28,7 +28,7 @@ public class Graf {
                 Node newNoued = new Node(currentNode,"");
                 emptyList.add(newNoued);
                 adjList.put(new Node(sourceNoude,""),emptyList);
-                System.out.println("Noued ajouter"+sourceNoude);
+                System.out.println("Noued add : ID = "+sourceNoude);
             }
             else
             {
@@ -40,9 +40,8 @@ public class Graf {
                     newList.add(n);
                 }
                 newList.add(newNoued);
-                //emptyList.add(newNoued);
                 adjList.put(node,newList);
-                System.out.println("Noued ajouter"+sourceNoude);
+                //emptyList.add(newNoued);
             }
         }
     }
@@ -82,13 +81,20 @@ public class Graf {
     Node getNode(int id)
     {
         //pour retourner le node
-        for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet())
+        if (existsNode(id))
         {
-            Node n = nodes.getKey();
-            if( n.getId()==id )
+            for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet())
             {
-                return n;
+                Node n = nodes.getKey();
+                if( n.getId()==id )
+                {
+                    return n;
+                }
             }
+        }
+        else
+        {
+            System.out.println("Node : "+id+" Dont existe in list of Nodes");
         }
         return null;
     }
@@ -97,35 +103,26 @@ public class Graf {
         //pour ajouter le node n au graph
         List<Node> emptyList = new ArrayList<>();
         adjList.put(n,emptyList);
-        System.out.println("Noued ajouter => Name : "+n.getName()+" ; ID : "+n.getId());
+        System.out.println("Noued add with function(addNode) => Name : "+n.getName()+" ; ID : "+n.getId());
     }
     void addNode(int id)
     {
         //pour ajouter le node qui a l'id id au graph
-        List<Node> emptyList = new ArrayList<>();
-        Node node = new Node(id,"");
-        adjList.put(node,emptyList);
-        System.out.println("Noued ajouter => Name : "+node.getName()+" ; ID : "+node.getId());
+        Node node = getNode(id);
+        addNode(node);
 
     }
     void removeNode(Node n)
     {
         //pour supprimer le node n
         adjList.remove(n);
-        System.out.println("Noued supprimer => Name : "+n.getName()+" ; ID : "+n.getId());
+        System.out.println("Noued deleted with function(removeNode) => Name : "+n.getName()+" ; ID : "+n.getId());
     }
     void removeNode(int id)
     {
         //pour supprimer le node qui à l'id id
-        for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet())
-        {
-            Node n = nodes.getKey();
-            if( n.getId() == id )
-            {
-                removeNode(n);
-                break;
-            }
-        }
+        Node node = getNode(id);
+        removeNode(node);
     }
     List<Node> getSuccessors(Node n)
     {
@@ -142,33 +139,35 @@ public class Graf {
     List<Node> getSuccessors(int id)
     {
         //pour avoir la liste des successeurs de node qui à l'id id
-        for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet())
-        {
-            Node n = nodes.getKey();
-            if( n.getId() == id )
-            {
-                return nodes.getValue();
-            }
-        }
-        return null;
+        Node n = getNode(id);
+        return getSuccessors(n);
     }
+
+    /************************* AVANT cette lingne il faut ajouter les conditions comme si(existNode(u)).... *************************/
+
     boolean adjacent(Node u, Node v)
     {
         //pour vérifier si les nodes n et v sont adjecents
-        List<Node> successors_of_u = getSuccessors(u);
-        List<Node> successors_of_v = getSuccessors(v);
-        for(Node node:successors_of_u)
+        if(existsNode(u) && existsNode(v))
         {
-            if(node.getId() == v.getId())
+            List<Node> successors_of_u = getSuccessors(u);
+            for(Node node:successors_of_u)
             {
-                return true;
+                if(node.getId() == v.getId())
+                {
+                    return true;
+                }
             }
         }
-        for(Node node:successors_of_v)
+        else
         {
-            if(node.getId() == u.getId())
+            if(!existsNode(u))
             {
-                return true;
+                System.out.println("Node : "+u.getId()+" dont existe in the listes of nodes");
+            }
+            else
+            {
+                System.out.println("Node : "+v.getId()+" dont existe in the listes of nodes");
             }
         }
         return false;
@@ -176,23 +175,9 @@ public class Graf {
     boolean adjacent(int idn1, int idn2)
     {
         //pour vérifier si les nodes qui ont les ids idn1 et idn2 sont adjecents
-        List<Node> successors_of_u = getSuccessors(idn1);
-        List<Node> successors_of_v = getSuccessors(idn2);
-        for(Node node:successors_of_u)
-        {
-            if(node.getId() == idn2)
-            {
-                return true;
-            }
-        }
-        for(Node node:successors_of_v)
-        {
-            if(node.getId() == idn1)
-            {
-                return true;
-            }
-        }
-        return false;
+        Node u = getNode(idn1);
+        Node v = getNode(idn2);
+        return adjacent(u,v);
     }
     List<Node> getAllNodes()
     {
@@ -215,7 +200,7 @@ public class Graf {
         {
             nbr += nodes.getValue().size();
         }
-        System.out.println("Nombre des edges : "+nbr);
+        System.out.println("edges Number : "+nbr);
         return nbr;
     }
     boolean existsEdge(Node u, Node v)
@@ -246,17 +231,147 @@ public class Graf {
         }
         return false;
     }
-    void addEdge(Node from, Node to){} // pour ajouter un edge entre node from(début) et node to(fin)
-    void addEdge(int id_from, int id_to){} // pour ajouter un edge entre node qui à id id_from(début) et node qui à id id_to(fin)
-    void removeEdge(Node from, Node to){}//pour supprimer l'edge
-    void removeEdge(int id_from, int id_to){} //pour supprimer l'edge
-    List<Edge> getOutEdges(Node n){return null;} //pour récuperer toute les edges qui sort depuis node n
-    List<Edge> getOutEdges(int id){return null;} //pour récuperer toute les edges qui sort depuis node qui à comme id id
-    List<Edge> getInEdges(Node n){return null;} //pour récuperer toute les edges qui entre vers le node n
-    List<Edge> getInEdges(int id){return null;} //pour récuperer toute les edges qui entre vers le node qui à comme id id
-    List<Edge> getIncidentEdges(Node n){return null;} //récuperer toutes les nodes qui sort et entre vers le node n
-    List<Edge> getIncidentEdges(int id){return null;} //récuperer toutes les nodes qui sort et entre vers le node qui à comme id id
-    List<Edge> getAllEdges(){return null;} //récuperer toutes les edges de graph
+    void addEdge(Node from, Node to)
+    {
+        // pour ajouter un edge entre node from(début) et node to(fin)
+        if (existsNode(from) && existsNode(to))
+        {
+            for (Map.Entry<Node, List<Node>> node : adjList.entrySet())
+            {
+                if(node.getKey().getId() == from.getId())
+                {
+                    node.getValue().add(to);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            System.out.println("cant add Edge because Node dont exist ");
+        }
+
+
+    }
+    void addEdge(int id_from, int id_to)
+    {
+        // pour ajouter un edge entre node qui à id id_from(début) et node qui à id id_to(fin)
+        Node node_from = getNode(id_from);
+        Node node_to = getNode(id_to);
+        addEdge(node_from,node_to);
+    }
+    void removeEdge(Node from, Node to)
+    {
+        //pour supprimer l'edge
+        if (adjacent(from,to))
+        {
+            for (Map.Entry<Node, List<Node>> node : adjList.entrySet())
+            {
+                if(node.getKey().getId() == from.getId())
+                {
+
+                    for (int i=0;i<node.getValue().size();i++)
+                    {
+                        if(node.getValue().get(i).getId() == to.getId())
+                        {
+                            removeNode(to);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    void removeEdge(int id_from, int id_to)
+    {
+        //pour supprimer l'edge
+        Node node_from = getNode(id_from);
+        Node node_to = getNode(id_to);
+        removeEdge(node_from,node_to);
+    }
+    List<Edge> getOutEdges(Node n)
+    {
+        //pour récuperer toute les edges qui sort depuis node n
+        List<Edge> edges = new ArrayList<Edge>();
+        if(existsNode(n))
+        {
+            List<Node> successors=getSuccessors(n);
+            for (int i=0;i<successors.size();i++)
+            {
+                Edge edge=new Edge(n.getId(),successors.get(i).getId());
+                edges.add(edge);
+            }
+        }
+        return edges;
+    }
+    List<Edge> getOutEdges(int id)
+    {
+        //pour récuperer toute les edges qui sort depuis node qui à comme id id
+        Node n = getNode(id);
+        return getOutEdges(n);
+    }
+    List<Edge> getInEdges(Node n)
+    {
+        //pour récuperer toute les edges qui entre vers le node n
+        List<Node> nodes = getAllNodes();
+        List<Node> successors;//=new ArrayList<Node>();
+        List<Edge> edges = new ArrayList<Edge>();
+        if(existsNode(n))
+        {
+            for (int i=0;i<nodes.size();i++)
+            {
+                successors = getSuccessors(nodes.get(i));
+                for(int j=0;j<successors.size();j++)
+                {
+                    if(n.getId() == successors.get(j).getId())
+                    {
+                        Edge edge=new Edge(nodes.get(i).getId(),n.getId());
+                        edges.add(edge);
+                    }
+                }
+            }
+        }
+        else
+        {
+            System.out.println("Node dont exist in list of Nodes");
+        }
+        return edges;
+    }
+    List<Edge> getInEdges(int id)
+    {
+        //pour récuperer toute les edges qui entre vers le node qui à comme id id
+        Node n = getNode(id);
+        return getInEdges(n);
+    }
+    List<Edge> getIncidentEdges(Node n)
+    {
+        //récuperer toutes les nodes qui sort et entre vers le node n
+        List<Edge> alledges;// = new ArrayList<Edge>();
+        alledges = getOutEdges(n);
+        List<Edge> Inedges = getInEdges(n);
+        for (int i=0;i<Inedges.size();i++)
+        {
+            alledges.add(Inedges.get(i));
+        }
+        return alledges;
+    }
+    List<Edge> getIncidentEdges(int id)
+    {
+        //récuperer toutes les nodes qui sort et entre vers le node qui à comme id id
+        Node n = getNode(id);
+        return getIncidentEdges(n);
+    }
+    List<Edge> getAllEdges()
+    {
+        //récuperer toutes les edges de graph
+        List<Edge> alledges = new ArrayList<Edge>();
+        List<Node> nodes = getAllNodes();
+        for (int i=0;i<nodes.size();i++)
+        {
+            alledges.addAll(getIncidentEdges(nodes.get(i)));
+        }
+        return alledges;
+    }
 
     /******************************          Degrees           ************************************************/
 

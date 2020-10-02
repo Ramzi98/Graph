@@ -9,7 +9,7 @@ public class TestGrafPW2 {
     public static void main(String[] args) {
         System.out.println(">>>>>>>> Creating the subject example graph in G");
         Graf g = new Graf(2, 4, 0, 0, 6, 0, 2, 3, 5, 8, 0, 0, 4, 7, 0, 3, 0, 7, 0);
-
+        System.out.println("Nbr noued : "+g.nbNodes());
         //////////////
         System.out.println("getNodes => Name :"+g.getNode(3).getName()+" ; ID : "+g.getNode(3).getId());
         Node test_node=new Node(9,"NODE9");
@@ -25,7 +25,7 @@ public class TestGrafPW2 {
             System.out.print(node.getId()+" , ");
         }
         System.out.println();
-        System.out.println("7 et 2 sont adjacents ? : "+g.adjacent(7,2));
+        System.out.println("7 And 2 are adjacent ? : "+g.adjacent(7,2));
         System.out.print("Get All Nodes : [");
         for (int i=0;i<g.nbNodes();i++)
         {
@@ -34,6 +34,39 @@ public class TestGrafPW2 {
         System.out.println("]");
         int nbedges = g.nbEdges();
         System.out.println("Existe edge entre 4,2 ?"+g.existsEdge(4,2));
+        g.addEdge(2,7);
+        System.out.println("Add edge from 2 -> 7");
+        System.out.print("Successors of 2 => : ");
+        for (Node node:g.getSuccessors(2))
+        {
+            System.out.print(node.getId()+" , ");
+        }
+        System.out.println();
+        System.out.print("OutEdges of 4 => : ");
+        for (Edge edges:g.getOutEdges(4))
+        {
+            System.out.print("( "+edges.getStartnode()+" , "+edges.getEndnode()+" ) ; ");
+        }
+        System.out.println();
+        System.out.print("InEdges of 3 => : ");
+        for (Edge edges:g.getInEdges(3))
+        {
+            System.out.print("( "+edges.getStartnode()+" , "+edges.getEndnode()+" ) ; ");
+        }
+        System.out.println();
+        System.out.print("Incident Edges of 7 => : ");
+        for (Edge edges:g.getIncidentEdges(7))
+        {
+            System.out.print("( "+edges.getStartnode()+" , "+edges.getEndnode()+" ) ; ");
+        }
+        System.out.println();
+        System.out.print("All Edges of graphe => : ");
+        for (Edge edges:g.getAllEdges())
+        {
+            System.out.print("( "+edges.getStartnode()+" , "+edges.getEndnode()+" ) ; ");
+        }
+        System.out.println();
+
 
 
 

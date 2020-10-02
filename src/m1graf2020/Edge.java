@@ -9,6 +9,22 @@ public class Edge implements Comparable<Edge>{
         this.endnode = endnode;
     }
 
+    public int getStartnode() {
+        return startnode;
+    }
+
+    public void setStartnode(int startnode) {
+        this.startnode = startnode;
+    }
+
+    public int getEndnode() {
+        return endnode;
+    }
+
+    public void setEndnode(int endnode) {
+        this.endnode = endnode;
+    }
+
     @Override
     public int compareTo(Edge o) {
         return 0;
