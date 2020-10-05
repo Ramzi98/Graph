@@ -57,7 +57,7 @@ public class Graf {
 
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet())
         {
-            if( nodes.getKey() == n )
+            if(nodes.getKey().equals(n))
             {
                 return true;
             }
@@ -101,14 +101,23 @@ public class Graf {
     void addNode(Node n)
     {
         //pour ajouter le node n au graph
-        List<Node> emptyList = new ArrayList<>();
-        adjList.put(n,emptyList);
-        System.out.println("Noued add with function(addNode) => Name : "+n.getName()+" ; ID : "+n.getId());
+        if(!existsNode(n))
+        {
+            List<Node> emptyList = new ArrayList<>();
+            adjList.put(n,emptyList);
+            System.out.println("Noued add with function(addNode) => Name : "+n.getName()+" ; ID : "+n.getId());
+        }
+        else
+        {
+            System.out.println("Noued existe deja");
+        }
+
     }
     void addNode(int id)
     {
         //pour ajouter le node qui a l'id id au graph
-        Node node = getNode(id);
+        //Node node = getNode(id);
+        Node node = new Node(id,"");
         addNode(node);
 
     }
@@ -234,7 +243,7 @@ public class Graf {
     void addEdge(Node from, Node to)
     {
         // pour ajouter un edge entre node from(début) et node to(fin)
-        if (existsNode(from) && existsNode(to))
+        if (existsNode(from) && existsNode(to) && !existsEdge(from,to))
         {
             for (Map.Entry<Node, List<Node>> node : adjList.entrySet())
             {
@@ -244,6 +253,10 @@ public class Graf {
                     break;
                 }
             }
+        }
+        else if(existsEdge(from,to))
+        {
+            System.out.println("Edge already existe");
         }
         else
         {
@@ -298,7 +311,7 @@ public class Graf {
             List<Node> successors=getSuccessors(n);
             for (int i=0;i<successors.size();i++)
             {
-                Edge edge=new Edge(n.getId(),successors.get(i).getId());
+                Edge edge=new Edge(n,successors.get(i));
                 edges.add(edge);
             }
         }
@@ -325,7 +338,7 @@ public class Graf {
                 {
                     if(n.getId() == successors.get(j).getId())
                     {
-                        Edge edge=new Edge(nodes.get(i).getId(),n.getId());
+                        Edge edge=new Edge(nodes.get(i),n);
                         edges.add(edge);
                     }
                 }
@@ -366,25 +379,118 @@ public class Graf {
         //récuperer toutes les edges de graph
         List<Edge> alledges = new ArrayList<Edge>();
         List<Node> nodes = getAllNodes();
+        List<Edge> edgeList=new ArrayList<Edge>();
         for (int i=0;i<nodes.size();i++)
         {
-            alledges.addAll(getIncidentEdges(nodes.get(i)));
+            edgeList=getOutEdges(nodes.get(i));
+            for (Edge e:edgeList)
+            {
+                alledges.add(e);
+            }
+
         }
+        EdgeList = alledges;
         return alledges;
     }
 
     /******************************          Degrees           ************************************************/
 
-    int inDegree(Node n){return 0;} //pour connaitre le in-degree de node n
-    int inDegree(int id){return 0;} //pour connaitre le in-degree de node qui à id comme id
-    int outDegree(Node n){return 0;} //pour connaitre le out-degree de node n
-    int outDegree(int id){return 0;} //pour connaitre le out-degree de node qui à id comme id
-    int degree(Node n){return 0;} //pour connaitre le degree de node n
-    int degree(int id){return 0;} //pour connaitre le degree de node qui à id comme id
+    int inDegree(Node n)
+    {
+        //pour connaitre le in-degree de node n
+        int compteur=0;
+        List<Edge> edges=getInEdges(n);
+        for (Edge e : edges)
+        {
+            if(e.getStartnode().equals(e.getEndnode()))
+            {
+                compteur+=2;
+            }
+            else
+            {
+                compteur++;
+            }
+        }
+        return edges.size();
+    }
+    int inDegree(int id)
+    {
+        //pour connaitre le in-degree de node qui à id comme id
+        Node node = getNode(id);
+        return inDegree(node);
+    }
+    int outDegree(Node n)
+    {
+        //pour connaitre le out-degree de node n
+        int compteur=0;
+        List<Edge> edges=getOutEdges(n);
+        for (Edge e : edges)
+        {
+            if(e.getStartnode().equals(e.getEndnode()))
+            {
+                compteur+=2;
+            }
+            else
+            {
+                compteur++;
+            }
+        }
+        return edges.size();
+    }
+    int outDegree(int id)
+    {
+        //pour connaitre le out-degree de node qui à id comme id
+        Node node = getNode(id);
+        return outDegree(node);
+    }
+    int degree(Node n)
+    {
+        //pour connaitre le degree de node n
+        return inDegree(n)+outDegree(n);
+    }
+    int degree(int id)
+    {
+        //pour connaitre le degree de node qui à id comme id
+        Node node = getNode(id);
+        return degree(node);
+    }
 
     /******************************           Graph Representation           ************************************************/
 
-    Graf getReverse(){return null;} //pour calculer le nouveau graph inverse
+    Graf getReverse()
+    {
+        //pour calculer le nouveau graph inverse
+        Graf reverseGraf = new Graf();
+        Map<Node, List<Node>> newadjList = new HashMap<Node,List<Node>>();
+        List<Node> successors;
+
+        List<Edge> edges;
+        
+        for (Map.Entry<Node, List<Node>> node : adjList.entrySet())
+        {
+            List<Node> adjacentsList=new ArrayList<Node>();
+            successors = node.getValue();
+            for(Node successor:successors)
+            {
+                if(!reverseGraf.existsNode(successor))
+                {
+                    edges = getInEdges(successor);
+                    for (Edge e : edges)
+                    {
+                        adjacentsList.add(e.getStartnode());
+                    }
+                    reverseGraf.addNode(successor);
+                    newadjList.put(successor,adjacentsList);
+
+                }
+
+            }
+
+        }
+        reverseGraf.adjList=newadjList;
+        reverseGraf.EdgeList=reverseGraf.getAllEdges();
+        return reverseGraf;
+    }
     Graf getTransitiveClosure(){return null;} //pour calculer dans le nouveau graph transitive closure du graph
 
     /******************************           Graph Traversal           ************************************************/

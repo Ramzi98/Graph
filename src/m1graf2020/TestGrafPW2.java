@@ -36,6 +36,8 @@ public class TestGrafPW2 {
         System.out.println("Existe edge entre 4,2 ?"+g.existsEdge(4,2));
         g.addEdge(2,7);
         System.out.println("Add edge from 2 -> 7");
+        g.addEdge(7,7);
+        System.out.println("Add edge from 7 -> 7");
         System.out.print("Successors of 2 => : ");
         for (Node node:g.getSuccessors(2))
         {
@@ -45,29 +47,42 @@ public class TestGrafPW2 {
         System.out.print("OutEdges of 4 => : ");
         for (Edge edges:g.getOutEdges(4))
         {
-            System.out.print("( "+edges.getStartnode()+" , "+edges.getEndnode()+" ) ; ");
+            System.out.print("( "+edges.getStartnode().getId()+" , "+edges.getEndnode().getId()+" ) ; ");
         }
         System.out.println();
-        System.out.print("InEdges of 3 => : ");
-        for (Edge edges:g.getInEdges(3))
+        System.out.print("InEdges of 2 => : ");
+        for (Edge edges:g.getInEdges(2))
         {
-            System.out.print("( "+edges.getStartnode()+" , "+edges.getEndnode()+" ) ; ");
+            System.out.print("( "+edges.getStartnode().getId()+" , "+edges.getEndnode().getId()+" ) ; ");
         }
         System.out.println();
-        System.out.print("Incident Edges of 7 => : ");
-        for (Edge edges:g.getIncidentEdges(7))
+        System.out.print("Incident Edges of 2 => : ");
+        for (Edge edges:g.getIncidentEdges(2))
         {
-            System.out.print("( "+edges.getStartnode()+" , "+edges.getEndnode()+" ) ; ");
+            System.out.print("( "+edges.getStartnode().getId()+" , "+edges.getEndnode().getId()+" ) ; ");
+        }
+        System.out.println();
+        System.out.print("All Edges of graphe (with function getAllEdges) => : ");
+        for (Edge edges:g.getAllEdges())
+        {
+            System.out.print("( "+edges.getStartnode().getId()+" , "+edges.getEndnode().getId()+" ) ; ");
         }
         System.out.println();
         System.out.print("All Edges of graphe => : ");
-        for (Edge edges:g.getAllEdges())
+        for (Edge edges:g.EdgeList)
         {
-            System.out.print("( "+edges.getStartnode()+" , "+edges.getEndnode()+" ) ; ");
+            System.out.print("( "+edges.getStartnode().getId()+" , "+edges.getEndnode().getId()+" ) ; ");
         }
         System.out.println();
-
-
+        System.out.println("InDegree of Node 2 => : "+ g.inDegree(2));
+        System.out.println("OutDegree of Node 4 => : "+ g.outDegree(4));
+        System.out.println("Degree of Node 7 => : "+ g.degree(7));
+        Graf reverse = g.getReverse();
+        System.out.print("All Edges of Reverse graphe => : ");
+        for (Edge edges:reverse.EdgeList)
+        {
+            System.out.print("( "+edges.getStartnode().getId()+" , "+edges.getEndnode().getId()+" ) ; ");
+        }
 
 
 

@@ -1,6 +1,7 @@
 package m1graf2020;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Node  implements Comparable<Node> {
@@ -54,11 +55,22 @@ public class Node  implements Comparable<Node> {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return this.hashCode() == o.hashCode();
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName());
+    }
 
     @Override
     public int compareTo(Node o) {
-        return 0;
+
+        return this.getId() - o.getId();
     }
 }
