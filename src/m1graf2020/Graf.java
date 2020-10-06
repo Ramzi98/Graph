@@ -94,7 +94,8 @@ public class Graf {
         }
         else
         {
-            System.out.println("Node : "+id+" Dont existe in list of Nodes");
+            System.out.println("Node : "+id+" Is created he Does't existe in list of Nodes before ");
+            addNode(new Node(id,""));
         }
         return null;
     }
@@ -258,9 +259,13 @@ public class Graf {
         {
             System.out.println("Edge already existe");
         }
-        else
+        else if(!existsNode(from))
         {
-            System.out.println("cant add Edge because Node dont exist ");
+            addNode(from);
+        }
+        else if(!existsNode(to))
+        {
+            addNode(to);
         }
 
 
@@ -457,45 +462,46 @@ public class Graf {
 
     /******************************           Graph Representation           ************************************************/
 
+    int[] toSuccessorArray(){return null;} //pour obtenir la representation du graphe dans SA (successor array)
+    int[][] toAdjMatrix(){return null;} //pour obtenir obtenir la representation du graphe comme une matrice d'adjacence
+
+    /******************************           Graph Transformation           ************************************************/
+
     Graf getReverse()
     {
         //pour calculer le nouveau graph inverse
         Graf reverseGraf = new Graf();
         Map<Node, List<Node>> newadjList = new HashMap<Node,List<Node>>();
-        List<Node> successors;
-
         List<Edge> edges;
         
         for (Map.Entry<Node, List<Node>> node : adjList.entrySet())
         {
             List<Node> adjacentsList=new ArrayList<Node>();
-            successors = node.getValue();
-            for(Node successor:successors)
+            reverseGraf.addNode(node.getKey());
+            edges = getInEdges(node.getKey());
+            for (Edge e : edges)
             {
-                if(!reverseGraf.existsNode(successor))
-                {
-                    edges = getInEdges(successor);
-                    for (Edge e : edges)
-                    {
-                        adjacentsList.add(e.getStartnode());
-                    }
-                    reverseGraf.addNode(successor);
-                    newadjList.put(successor,adjacentsList);
-
-                }
-
+                adjacentsList.add(e.getStartnode());
             }
-
+            newadjList.put(node.getKey(),adjacentsList);
         }
         reverseGraf.adjList=newadjList;
         reverseGraf.EdgeList=reverseGraf.getAllEdges();
         return reverseGraf;
     }
-    Graf getTransitiveClosure(){return null;} //pour calculer dans le nouveau graph transitive closure du graph
+    Graf getTransitiveClosure()
+    {
+        //pour calculer dans le nouveau graph transitive closure du graph
+        int[][] tc;
+        return  null;
+    }
 
     /******************************           Graph Traversal           ************************************************/
 
-    List<Node> getDFS(){return null;}
+    List<Node> getDFS()
+    {
+            return null;
+    }
     List<Node> getBFS(){return null;}
 
     /******************************            Graph Export           ************************************************/
