@@ -462,8 +462,62 @@ public class Graf {
 
     /******************************           Graph Representation           ************************************************/
 
-    int[] toSuccessorArray(){return null;} //pour obtenir la representation du graphe dans SA (successor array)
-    int[][] toAdjMatrix(){return null;} //pour obtenir obtenir la representation du graphe comme une matrice d'adjacence
+    int[] toSuccessorArray()
+    {
+        //pour obtenir la representation du graphe dans SA (successor array)
+        List <Node> nodes = getAllNodes();
+        ArrayList<Integer> arrayList= new ArrayList<Integer>();
+        for(Node currentnode : nodes)
+        {   arrayList.add(currentnode.getId());
+            for (Node othernode : nodes)
+            {
+                if(existsEdge(currentnode,othernode))
+                {
+                    arrayList.add(othernode.getId());
+                }
+            }
+            arrayList.add(0);
+        }
+        int [] SA = new int[arrayList.size()];
+        for(int i=0;i<arrayList.size();i++)
+        {
+            SA[i] = arrayList.get(i);
+        }
+        return  SA;
+    }
+    int[][] toAdjMatrix()
+    {
+        //pour obtenir obtenir la representation du graphe comme une matrice d'adjacence
+        List<Edge> edges = getAllEdges();
+        List<Node> nodes = getAllNodes();
+        int startnode,endnode;
+        int max = 0,max1 = 0;
+        //Recuperation d'ID max
+        for(int i=0;i<(nodes.size()-1);i++)
+        {
+            max1=Math.max(nodes.get(i).getId(),nodes.get(i+1).getId());
+            if(max<max1)
+            {
+                max = max1;
+            }
+        }
+        int [][] adjMatrix = new int[max+1][max+1];
+        //initialisation
+        for(int i=0;i<=max;i++)
+        {
+            for(int j=0;j<=max;j++)
+            {
+                adjMatrix[i][j] = 0;
+            }
+        }
+        for(Edge edge : edges)
+        {
+            startnode=edge.getStartnode().getId();
+            endnode=edge.getEndnode().getId();
+            adjMatrix[startnode][endnode]++;
+        }
+        return adjMatrix;
+    }
 
     /******************************           Graph Transformation           ************************************************/
 
@@ -492,8 +546,30 @@ public class Graf {
     Graf getTransitiveClosure()
     {
         //pour calculer dans le nouveau graph transitive closure du graph
-        int[][] tc;
-        return  null;
+        List<Edge> edges = getAllEdges();
+        List<Node> nodes = getAllNodes();
+        List<Node> successors;
+        List<Node> predecessors;
+        List<Edge> newedges = edges;
+        Graf tg = getReverse();
+        Graf Transitivegraph= new Graf();
+        Transitivegraph.adjList=adjList;
+        for (Node node : nodes)
+        {
+            //Transitivegraph.addNode(node);
+            predecessors = tg.getSuccessors(node);
+            successors = getSuccessors(node);
+            for(Node predecessor : predecessors)
+            {
+                for(Node successor : successors)
+                {
+                    newedges.add(new Edge(predecessor,successor));
+                    Transitivegraph.EdgeList.add(new Edge(predecessor,successor));
+                }
+            }
+
+        }
+        return  Transitivegraph;
     }
 
     /******************************           Graph Traversal           ************************************************/

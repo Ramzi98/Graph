@@ -83,9 +83,35 @@ public class TestGrafPW2 {
         {
             System.out.print("( "+edges.getStartnode().getId()+" , "+edges.getEndnode().getId()+" ) ; ");
         }
-
-
-
+        System.out.println();
+        System.out.println("Adjacency matrix of Graf g: ");
+        int[][] adjmatrix = g.toAdjMatrix();
+        for(int i=0;i<adjmatrix.length;i++)
+        {
+            for(int j=0;j<adjmatrix.length;j++)
+            {
+                System.out.print(" "+adjmatrix[i][j]+" ");
+            }
+            System.out.println();
+        }
+        int[] SuccessorArray = g.toSuccessorArray();
+        System.out.println("Adjacency matrix of Transitive Graf : ");
+        int[][] Transitiveadjmatrix = g.getTransitiveClosure().toAdjMatrix();
+        for(int i=0;i<Transitiveadjmatrix.length;i++)
+        {
+            for(int j=0;j<Transitiveadjmatrix.length;j++)
+            {
+                System.out.print(" "+Transitiveadjmatrix[i][j]+" ");
+            }
+            System.out.println();
+        }
+        System.out.print("Successor Array of Graf : ");
+        int[] SA = g.toSuccessorArray();
+        for (int i = 0; i<SA.length ; i++)
+        {
+            System.out.print(SA[i]+" ");
+        }
+        System.out.println();
 
 
 
