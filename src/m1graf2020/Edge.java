@@ -112,4 +112,11 @@ public class Edge implements Comparable<Edge>{
         }
         return this.getStartnode().compareTo(e.getStartnode());
     }
+
+    @Override
+    public String toString() {
+        return
+                "("+ startnode + ") -> " +
+                "(" + endnode + ")";
+    }
 }

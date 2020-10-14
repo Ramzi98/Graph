@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TestGrafPW2 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exceptiongraf {
         System.out.println(">>>>>>>> Creating the subject example graph in G");
         Graf g = new Graf(2, 4, 0, 0, 6, 0, 2, 3, 5, 8, 0, 0, 4, 7, 0, 3, 0, 7, 0);
         System.out.println(">>>> Graph information");
@@ -71,10 +71,10 @@ public class TestGrafPW2 {
         }
 
         System.out.println("\n>>>>>>>> Recreating edges (4, 3), (3, 6), (7, 3), adding edge (12, 3), creating edge (3, 25)");
-        g.addEdge(new Edge(4, 3));
-        g.addEdge(new Edge(3, 6));
-        g.addEdge(new Edge(7, 3));
-        g.addEdge(new Edge(12, 3));
+        g.addEdge(4,3);
+        g.addEdge(3,6);
+        g.addEdge(7,3);
+        g.addEdge(12,3);
         g.addEdge(3, 25);
         System.out.println("Graph now:");
         System.out.println(g.toDotString());

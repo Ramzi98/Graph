@@ -1,7 +1,7 @@
 package m1graf2020;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exceptiongraf {
         System.out.println(">>>>>>>> Creating the subject example graph in G");
         Graf g = new Graf(2, 4, 0, 0, 6, 0, 2, 3, 5, 8, 0, 0, 4, 7, 0, 3, 0, 7, 0);
         System.out.println("Nbr noued : " + g.nbNodes());
@@ -25,7 +25,6 @@ public class Main {
             System.out.print(g.getAllNodes().get(i).getId() + " , ");
         }
         System.out.println("]");
-        int nbedges = g.nbEdges();
         System.out.println("Existe edge entre 4,2 ?" + g.existsEdge(4, 2));
         g.addEdge(2, 7);
         System.out.println("Add edge from 2 -> 7");
