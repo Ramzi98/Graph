@@ -71,7 +71,6 @@ public class Graf {
                 }
                 newList.add(newNoued);
                 adjList.put(node, newList);
-                //emptyList.add(newNoued);
             }
         }
     }
@@ -157,8 +156,8 @@ public class Graf {
                 }
             }
         } else {
-            System.out.println("Node : " + id + " Is created he Does't existe in list of Nodes before ");
-            addNode(new Node(id, ""));
+            System.out.println("Node : " + id + "add wit function getNode Does't existe in list of Nodes before ");
+            //addNode(new Node(id, ""));
         }
         return null;
     }
@@ -195,12 +194,15 @@ public class Graf {
      * @param n node who we have to remove
      */
     public void removeNode(Node n) {
-        for (Node x : this.getAllNodes()
-        ) {
+        for (Node x : this.getAllNodes()) {
             if (this.getSuccessors(x).contains(n)) adjList.get(x).remove(n);
         }
+
         for (Edge e : this.EdgeList) {
-            if (e.getEndnode().getId() == n.getId() || e.getStartnode().getId() == n.getId()) this.EdgeList.remove(e);
+            if (e.getEndnode().getId() == n.getId() || e.getStartnode().getId() == n.getId())
+            {
+                this.EdgeList.remove(new Edge(e.getStartnode(),e.getEndnode()));
+            }
         }
         adjList.remove(n);
     }
@@ -224,7 +226,7 @@ public class Graf {
      */
     List<Node> getSuccessors(Node n) {
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
-            if (nodes.getKey() == n) {
+            if (nodes.getKey().getId() == n.getId()) {
                 return nodes.getValue();
             }
         }
@@ -358,11 +360,18 @@ public class Graf {
     boolean existsEdge(int idn1, int idn2) {
         List<Node> list;
         list = getSuccessors(idn1);
-        for (int i = 0; i < list.size(); i++) {
-            //pour voir s'il existe un edge entre les nodes qui ont les ids idn1 et idn2
-            if (list.get(i).getId() == idn2) {
-                return true;
+        if(!list.equals(null))
+        {
+            for (int i = 0; i < list.size(); i++) {
+                //pour voir s'il existe un edge entre les nodes qui ont les ids idn1 et idn2
+                if (list.get(i).getId() == idn2) {
+                    return true;
+                }
             }
+        }
+        else
+        {
+            System.out.println("There is no edge ("+idn1+" , "+idn2+" )");
         }
         return false;
     }
@@ -401,16 +410,17 @@ public class Graf {
 
         // if the node to is already in the list of target of from ( so the edge already exist)
 
-        if (!this.adjList.get(from).contains(to))
-        {
+        // Enlver if pour que add multiple edges ca marche
+        // if (!this.adjList.get(from).contains(to))
+        // {
             // we add it if it doesn't exist
 
             this.adjList.get(from).add(to);
 
             // We add an edge also in the edges array list, if the graph is weighted, we supposed that the weight is 0
-            this.EdgeList.add(new Edge(from,to,0));
+            this.EdgeList.add(new Edge(from,to));
 
-        }
+        // }
 
 
     }
@@ -459,14 +469,15 @@ public class Graf {
 
         // if the node to is already in the list of target of from ( so the edge already exist)
 
-        if (!this.adjList.get(from).contains(to))
-        {
+        // Enlver if pour que add multiple edges ca marche
+        // if (!this.adjList.get(from).contains(to))
+        // {
             // we add it if it doesn't exist
 
             this.adjList.get(from).add(to);
-            EdgeList.add(new Edge(from,to,weight));
+            this.EdgeList.add(new Edge(from,to,weight));
 
-        }
+        // }
 
     }
 
@@ -488,6 +499,7 @@ public class Graf {
         if(existsEdge(from, to)) {
             this.adjList.get(from).remove(to);
         }
+        EdgeList.remove(new Edge(from,to));
     }
 
 
@@ -822,18 +834,20 @@ public class Graf {
      */
     public Graf getTransitiveClosure() throws Exceptiongraf {
         Graf TC = this;
+
         boolean changed = true;
 
         while (changed) {
             changed = false;
-            for (Node n : TC.getAllNodes()
-            ) {
+            for (Node n : TC.getAllNodes())
+            {
                 List<Edge> edges = new ArrayList<Edge>();
-                for (Edge x : TC.getOutEdges(n)
-                ) {
-                    for (Edge z : TC.getOutEdges(x.getEndnode())
-                    ) {
-                        if (!TC.adjList.get(n).contains(new Node(z.getEndnode().getId()))) {
+                for (Edge x : TC.getOutEdges(n))
+                {
+                    for (Edge z : TC.getOutEdges(x.getEndnode()))
+                    {
+                        if (!TC.adjList.get(n).contains(new Node(z.getEndnode().getId())))
+                        {
                             edges.add(new Edge(n, z.getEndnode(), x.getWeight() + z.getWeight()));
                             changed = true;
                         }
@@ -841,11 +855,21 @@ public class Graf {
                     }
 
                 }
-                for (Edge x :
-                        edges) {
-                    TC.addEdge(x.getStartnode().getId(), x.getEndnode().getId(), x.getWeight());
-
+                if(!weighted)
+                {
+                    for (Edge x : edges)
+                    {
+                        TC.addEdge(x.getStartnode().getId(), x.getEndnode().getId());
+                    }
                 }
+                else
+                {
+                    for (Edge x : edges)
+                    {
+                        TC.addEdge(x.getStartnode().getId(), x.getEndnode().getId(), x.getWeight());
+                    }
+                }
+
 
             }
 
