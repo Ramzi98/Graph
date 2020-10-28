@@ -138,13 +138,13 @@ public class TestGrafPW2 {
         System.out.println(">>>>>>>>>>    Transitive Closure");
         System.out.println(g.getTransitiveClosure().toDotString());
 
-        /*
+/*
         System.out.println("EdgeList : "+g.EdgeList);
         //g.getAllEdges();
         System.out.println("Nb EdgeList : "+g.EdgeList.size());
         System.out.println("NB Edge : "+g.nbEdges());
-         */
 
+*/
 
         System.out.println(">>>>>>>>>>    Emptying the graph by removing all its nodes");
         nodes = g.getAllNodes();
@@ -164,6 +164,7 @@ public class TestGrafPW2 {
             System.out.println("Edge (4, 2) exists");
         else
             System.out.println("There is no edge (4, 2)");
+        System.out.println(g.EdgeList);
     }
 
 }

@@ -98,7 +98,7 @@ public class Graf {
         }
     }
 
-    /******************************          Nodes           ************************************************/
+    // ****************************          Nodes           ************************************************/
 
     /***
      * Function who return the number of node in graph
@@ -198,13 +198,15 @@ public class Graf {
             if (this.getSuccessors(x).contains(n)) adjList.get(x).remove(n);
         }
 
-        for (Edge e : this.EdgeList) {
-            if (e.getEndnode().getId() == n.getId() || e.getStartnode().getId() == n.getId())
+        List<Edge> NewEdgeList= new ArrayList<>();
+        for (Edge e : EdgeList) {
+            if (!(e.getEndnode().equals(n)) && !(e.getStartnode().equals(n)))
             {
-                this.EdgeList.remove(new Edge(e.getStartnode(),e.getEndnode()));
+                NewEdgeList.add(e);
             }
         }
         adjList.remove(n);
+        EdgeList = NewEdgeList;
     }
 
 
@@ -226,7 +228,7 @@ public class Graf {
      */
     List<Node> getSuccessors(Node n) {
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
-            if (nodes.getKey().getId() == n.getId()) {
+            if (nodes.getKey().equals(n)) {
                 return nodes.getValue();
             }
         }
@@ -255,7 +257,7 @@ public class Graf {
         if (existsNode(u) && existsNode(v)) {
             List<Node> successors_of_u = getSuccessors(u);
             for (Node node : successors_of_u) {
-                if (node.getId() == v.getId()) {
+                if (node.equals(v)) {
                     return true;
                 }
             }
@@ -295,7 +297,7 @@ public class Graf {
         return AllNodes;
     }
 
-    /******************************          Edges           ************************************************/
+    // ******************************          Edges           ************************************************/
 
     /***
      * Function who return the number of edge in graph
@@ -321,8 +323,8 @@ public class Graf {
         List<Node> list;
         list = getSuccessors(e.getStartnode());
         if (!(list == null)) {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getId() == e.getEndnode().getId()) {
+            for (Node node : list) {
+                if (node.equals(e.getEndnode())) {
                     return true;
                 }
             }
@@ -341,8 +343,8 @@ public class Graf {
         List<Node> list;
         list = getSuccessors(u);
         if (!(list == null)) {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getId() == v.getId()) {
+            for (Node node : list) {
+                if (node.equals(v)) {
                     return true;
                 }
             }
@@ -360,11 +362,11 @@ public class Graf {
     boolean existsEdge(int idn1, int idn2) {
         List<Node> list;
         list = getSuccessors(idn1);
-        if(!list.equals(null))
+        if(!(list == null))
         {
-            for (int i = 0; i < list.size(); i++) {
+            for (Node node : list) {
                 //pour voir s'il existe un edge entre les nodes qui ont les ids idn1 et idn2
-                if (list.get(i).getId() == idn2) {
+                if (node.getId() == idn2) {
                     return true;
                 }
             }
@@ -387,6 +389,7 @@ public class Graf {
         Node to = new Node(y);
         this.addEdge(from,to);
 
+
     }
 
     /**
@@ -397,7 +400,7 @@ public class Graf {
     public void addEdge(Node from, Node to)
     {
         // if the node from exist
-        if(this.adjList.containsKey(from)==false)
+        if(!this.adjList.containsKey(from))
         {
             this.adjList.put(from,new ArrayList<Node>());
         }
@@ -411,8 +414,8 @@ public class Graf {
         // if the node to is already in the list of target of from ( so the edge already exist)
 
         // Enlver if pour que add multiple edges ca marche
-        // if (!this.adjList.get(from).contains(to))
-        // {
+        //if (!this.adjList.get(from).contains(to))
+        //{
             // we add it if it doesn't exist
 
             this.adjList.get(from).add(to);
@@ -420,7 +423,7 @@ public class Graf {
             // We add an edge also in the edges array list, if the graph is weighted, we supposed that the weight is 0
             this.EdgeList.add(new Edge(from,to));
 
-        // }
+        //}
 
 
     }
@@ -498,8 +501,17 @@ public class Graf {
     public void removeEdge(Node from, Node to){
         if(existsEdge(from, to)) {
             this.adjList.get(from).remove(to);
+            List<Edge> NewEdgeList= new ArrayList<>();
+            for (Edge e : EdgeList) {
+                if (!(e.getEndnode().equals(to)) && !(e.getStartnode().equals(from)))
+                {
+                    NewEdgeList.add(e);
+                }
+            }
+            EdgeList = NewEdgeList;
         }
-        EdgeList.remove(new Edge(from,to));
+
+
     }
 
 
@@ -513,8 +525,8 @@ public class Graf {
         List<Edge> edges = new ArrayList<Edge>();
         if (existsNode(n)) {
             List<Node> successors = getSuccessors(n);
-            for (int i = 0; i < successors.size(); i++) {
-                Edge edge = new Edge(n, successors.get(i));
+            for (Node successor : successors) {
+                Edge edge = new Edge(n, successor);
                 edges.add(edge);
             }
         }
@@ -543,11 +555,11 @@ public class Graf {
         List<Node> successors;
         List<Edge> edges = new ArrayList<Edge>();
         if (existsNode(n)) {
-            for (int i = 0; i < nodes.size(); i++) {
-                successors = getSuccessors(nodes.get(i));
-                for (int j = 0; j < successors.size(); j++) {
-                    if (n.getId() == successors.get(j).getId()) {
-                        Edge edge = new Edge(nodes.get(i), n);
+            for (Node node : nodes) {
+                successors = getSuccessors(node);
+                for (Node successor : successors) {
+                    if (n.equals(successor)) {
+                        Edge edge = new Edge(node, n);
                         edges.add(edge);
                     }
                 }
@@ -580,9 +592,7 @@ public class Graf {
         List<Edge> alledges;// = new ArrayList<Edge>();
         alledges = getOutEdges(n);
         List<Edge> Inedges = getInEdges(n);
-        for (int i = 0; i < Inedges.size(); i++) {
-            alledges.add(Inedges.get(i));
-        }
+        alledges.addAll(Inedges);
         return alledges;
     }
 
@@ -606,18 +616,16 @@ public class Graf {
         List<Edge> alledges = new ArrayList<Edge>();
         List<Node> nodes = getAllNodes();
         List<Edge> edgeList = new ArrayList<Edge>();
-        for (int i = 0; i < nodes.size(); i++) {
-            edgeList = getOutEdges(nodes.get(i));
-            for (Edge e : edgeList) {
-                alledges.add(e);
-            }
+        for (Node node : nodes) {
+            edgeList = getOutEdges(node);
+            alledges.addAll(edgeList);
 
         }
         EdgeList = alledges;
         return alledges;
     }
 
-    /******************************          Degrees           ************************************************/
+    // ******************************          Degrees           ************************************************/
 
     /***
      * Function who return the inDegree of Node
@@ -684,7 +692,7 @@ public class Graf {
         return degree(node);
     }
 
-    /******************************           Graph Representation           ************************************************/
+    // ******************************           Graph Representation           ************************************************/
 
     /***
      * Function who realize a successor array
@@ -800,7 +808,7 @@ public class Graf {
     }
 
 
-    /******************************           Graph Transformation           ************************************************/
+    // ******************************           Graph Transformation           ************************************************/
 
     /***
      *  Function who realize a new reversed graph with one graph given
@@ -881,7 +889,7 @@ public class Graf {
     /***
      * Function who realize a graph with adjacency matrix
      *
-     * @param adjMatrix
+     * @param adjMatrix an adjacency matrix
      * @return a graph with one adjacency matrix given in parameters
      */
     public Graf adjMatrixToGraf(int[][] adjMatrix) {
@@ -900,7 +908,7 @@ public class Graf {
     }
 
 
-    /******************************           Graph Traversal           ************************************************/
+    // ******************************           Graph Traversal           ************************************************/
 
     /**
      * the method that allow the user to get the Depth First Search ( DFS ) of a graph
@@ -982,7 +990,7 @@ public class Graf {
 
     }
 
-    /******************************            Graph Export           ************************************************/
+    // ******************************            Graph Export           ************************************************/
 
     /***
      * Function who create a dot format of a graph given
