@@ -11,7 +11,9 @@ import java.awt.GridBagLayout;//chosen JFrame layout
 import static java.awt.GridBagConstraints.*;
 import java.awt.GridBagConstraints;
 
-
+/***
+ * The interface class of our project of graph
+ */
 public class Interface extends JFrame {
     public JPanel test;
     public JButton createAnEmptyGraphButton;

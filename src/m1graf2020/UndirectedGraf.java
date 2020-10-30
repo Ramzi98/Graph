@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * this class extend the graf class, it represent the undirected graph, the only difference is when we add or remove and edge
+ * This class extend the graf class, it represent the undirected graph, the only difference is when we add or remove and edge
  * @author Yacine
  */
 public class UndirectedGraf extends Graf {

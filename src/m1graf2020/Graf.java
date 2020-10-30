@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * the Graf class, it represent the graph and the creation of the nodes, edges and manipulation of directed graph
+ * The Graf class, it represent the graph and the creation of the nodes, edges and manipulation of directed graph
  * @author Ramzi
  */
 public class Graf {
