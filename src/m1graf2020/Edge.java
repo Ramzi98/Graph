@@ -1,5 +1,8 @@
 package m1graf2020;
 
+/***
+ * Edge class is the class who create and compare the edges
+ */
 public class Edge implements Comparable<Edge>{
     private Node startnode;
     private Node endnode;

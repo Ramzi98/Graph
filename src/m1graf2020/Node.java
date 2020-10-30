@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/***
+ * Node is the class who create and compare the Nodes
+ */
 public class Node  implements Comparable<Node> {
     private static int count = 0;
     private Integer  id;

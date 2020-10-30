@@ -1,13 +1,15 @@
 package m1graf2020;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
+/**
+ * the Graf class, it represent the graph and the creation of the nodes, edges and manipulation of directed graph
+ * @author Ramzi
+ */
 public class Graf {
-    Map<Node, List<Node>> adjList = new HashMap<Node, List<Node>>();
-    List<Edge> EdgeList = new ArrayList<Edge>();
+    Map<Node, List<Node>> adjList = new HashMap<>();
+    List<Edge> EdgeList = new ArrayList<>();
     private boolean weighted;
 
     /**
@@ -15,8 +17,8 @@ public class Graf {
      */
     public Graf() {
         this.weighted = false;
-        this.adjList = new HashMap<Node, List<Node>>();
-        this.EdgeList = new ArrayList<Edge>();
+        this.adjList = new HashMap<>();
+        this.EdgeList = new ArrayList<>();
     }
 
     /**
@@ -27,8 +29,8 @@ public class Graf {
     public Graf(boolean weighted) {
         // we give the choice to the user to determine if the graph is weighted ou symmetric
         this.weighted = weighted;
-        this.adjList = new HashMap<Node, List<Node>>();
-        this.EdgeList = new ArrayList<Edge>();
+        this.adjList = new HashMap<>();
+        this.EdgeList = new ArrayList<>();
     }
 
     /***
@@ -37,7 +39,7 @@ public class Graf {
      * @param adjList map with node and list of node
      */
     public Graf(Map<Node, List<Node>> adjList) {
-        this.adjList = new HashMap<Node, List<Node>>();
+        this.adjList = new HashMap<>();
     }
 
     /***
@@ -155,10 +157,12 @@ public class Graf {
                     return n;
                 }
             }
-        } else {
+        }
+        /*else {
             System.out.println("Node : " + id + "add wit function getNode Does't existe in list of Nodes before ");
             //addNode(new Node(id, ""));
         }
+        */
         return null;
     }
 
@@ -171,7 +175,7 @@ public class Graf {
         if (!existsNode(n)) {
             List<Node> emptyList = new ArrayList<>();
             adjList.put(n, emptyList);
-            System.out.println("Noued add with function(addNode) => Name : " + n.getName() + " ; ID : " + n.getId());
+            //System.out.println("Noued add with function(addNode) => Name : " + n.getName() + " ; ID : " + n.getId());
         } else {
             System.out.println("Noued existe deja");
         }
@@ -290,7 +294,7 @@ public class Graf {
      * @return a list of all nodes in graph
      */
     List<Node> getAllNodes() {
-        List<Node> AllNodes = new ArrayList<Node>();
+        List<Node> AllNodes = new ArrayList<>();
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
             AllNodes.add(nodes.getKey());
         }
@@ -309,7 +313,6 @@ public class Graf {
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
             nbr += nodes.getValue().size();
         }
-        System.out.println("edges Number : " + nbr);
         return nbr;
     }
 
@@ -402,13 +405,13 @@ public class Graf {
         // if the node from exist
         if(!this.adjList.containsKey(from))
         {
-            this.adjList.put(from,new ArrayList<Node>());
+            this.adjList.put(from,new ArrayList<>());
         }
 
         // if the node to exist
         if(!this.adjList.containsKey(to))
         {
-            this.adjList.put(to,new ArrayList<Node>());
+            this.adjList.put(to,new ArrayList<>());
         }
 
         // if the node to is already in the list of target of from ( so the edge already exist)
@@ -522,7 +525,7 @@ public class Graf {
      * @return the list of out edge of node n
      */
     List<Edge> getOutEdges(Node n) {
-        List<Edge> edges = new ArrayList<Edge>();
+        List<Edge> edges = new ArrayList<>();
         if (existsNode(n)) {
             List<Node> successors = getSuccessors(n);
             for (Node successor : successors) {
@@ -553,7 +556,7 @@ public class Graf {
     List<Edge> getInEdges(Node n) {
         List<Node> nodes = getAllNodes();
         List<Node> successors;
-        List<Edge> edges = new ArrayList<Edge>();
+        List<Edge> edges = new ArrayList<>();
         if (existsNode(n)) {
             for (Node node : nodes) {
                 successors = getSuccessors(node);
@@ -613,9 +616,9 @@ public class Graf {
      * @return a list of all edges in graph
      */
     List<Edge> getAllEdges() {
-        List<Edge> alledges = new ArrayList<Edge>();
+        List<Edge> alledges = new ArrayList<>();
         List<Node> nodes = getAllNodes();
-        List<Edge> edgeList = new ArrayList<Edge>();
+        List<Edge> edgeList;
         for (Node node : nodes) {
             edgeList = getOutEdges(node);
             alledges.addAll(edgeList);
@@ -701,7 +704,7 @@ public class Graf {
      */
     int[] toSuccessorArray() {
         List<Node> nodes = getAllNodes();
-        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        ArrayList<Integer> arrayList = new ArrayList<>();
         for (Node currentnode : nodes) {
             arrayList.add(currentnode.getId());
             for (Node othernode : nodes) {
@@ -727,7 +730,7 @@ public class Graf {
         List<Edge> edges = getAllEdges();
         List<Node> nodes = getAllNodes();
         int startnode, endnode;
-        int max = 0, max1 = 0;
+        int max = 0, max1;
         //Recuperation d'ID max
         for (int i = 0; i < (nodes.size() - 1); i++) {
             max1 = Math.max(nodes.get(i).getId(), nodes.get(i + 1).getId());
@@ -753,6 +756,7 @@ public class Graf {
 
     /***
      * Function who sort one list by number
+     * @param n the list of Nodes to be sorted
      */
     public void sortListNode(List<Node> n) {
         Collections.sort(n, new Comparator<Node>() {
@@ -774,8 +778,8 @@ public class Graf {
      */
     public void sortMapNodeByKey() {
         Map<Node, List<Node>> current = adjList;
-        Map<Node, List<Node>> lmap = new TreeMap<Node, List<Node>>(
-                new Comparator<Node>() {
+        Map<Node, List<Node>> lmap = new TreeMap<>(
+                new Comparator<>() {
                     @Override
                     public int compare(Node o1, Node o2) {
                         if (o1.getId() > o2.getId()) {
@@ -798,7 +802,7 @@ public class Graf {
 
     public List<Edge> sortListOfEdge() {
         List<Edge> listEdge = getAllEdges();
-        Collections.sort(listEdge, new Comparator<Edge>() {
+        Collections.sort(listEdge, new Comparator<>() {
             @Override
             public int compare(Edge o1, Edge o2) {
                 return o1.compareTo(o2);
@@ -818,11 +822,11 @@ public class Graf {
     Graf getReverse() {
         //pour calculer le nouveau graph inverse
         Graf reverseGraf = new Graf();
-        Map<Node, List<Node>> newadjList = new HashMap<Node, List<Node>>();
+        Map<Node, List<Node>> newadjList = new HashMap<>();
         List<Edge> edges;
 
         for (Map.Entry<Node, List<Node>> node : adjList.entrySet()) {
-            List<Node> adjacentsList = new ArrayList<Node>();
+            List<Node> adjacentsList = new ArrayList<>();
             reverseGraf.addNode(node.getKey());
             edges = getInEdges(node.getKey());
             for (Edge e : edges) {
@@ -849,7 +853,7 @@ public class Graf {
             changed = false;
             for (Node n : TC.getAllNodes())
             {
-                List<Edge> edges = new ArrayList<Edge>();
+                List<Edge> edges = new ArrayList<>();
                 for (Edge x : TC.getOutEdges(n))
                 {
                     for (Edge z : TC.getOutEdges(x.getEndnode()))
@@ -886,6 +890,7 @@ public class Graf {
 
     }
 
+
     /***
      * Function who realize a graph with adjacency matrix
      *
@@ -916,8 +921,8 @@ public class Graf {
      * @return a list of Node that represent the DFS algorithm
      */
     public List<Node> getDFS() {
-        List<Node> list = new ArrayList<Node>();
-        LinkedList<Node> Pile = new LinkedList<Node>();
+        List<Node> list = new ArrayList<>();
+        LinkedList<Node> Pile = new LinkedList<>();
         Boolean[] visited = new Boolean[this.getAllNodes().size()];
         List<Node> Nodes = this.getAllNodes();
         Arrays.fill(visited, false);
@@ -956,8 +961,8 @@ public class Graf {
      * @return a list of node that represent the BFS
      */
     public List<Node> getBFS() {
-        List<Node> list = new ArrayList<Node>();
-        LinkedList<Node> Queue = new LinkedList<Node>();
+        List<Node> list = new ArrayList<>();
+        LinkedList<Node> Queue = new LinkedList<>();
         Boolean[] visited = new Boolean[this.getAllNodes().size()];
         List<Node> Nodes = this.getAllNodes();
 
@@ -1002,11 +1007,37 @@ public class Graf {
 
 
         for (Map.Entry<Node, List<Node>> entry : adjList.entrySet()) {
-            int nFrom = entry.getKey().getId();
-            for (Node nod : entry.getValue()) {
-                int nto = nod.getId();
-                dotStringGraph += " " + nFrom + " -> " + nto + ";\n";
+            int nodeFrom = entry.getKey().getId();
+            if(entry.getValue().size()==0)
+            {
+                dotStringGraph += " " + nodeFrom + ";\n";
             }
+            else
+            {
+
+                //int i =0;
+                //dotStringGraph += " " + nodeFrom + " -> " ;
+                for (Node nod : entry.getValue()) {
+                    int nodeto = nod.getId();
+                    dotStringGraph += " " + nodeFrom + " -> " + nodeto + "; \n";
+                }
+                /*
+                    i++;
+
+                    if(i == entry.getValue().size())
+                    {
+                        dotStringGraph += " " + nodeto;
+                    }
+                    else
+                    {
+                        dotStringGraph += " " + nodeto + ",";
+                    }
+                }
+                dotStringGraph += ";\n";
+
+                 */
+            }
+
         }
 
         dotStringGraph += "}";
@@ -1019,6 +1050,7 @@ public class Graf {
      * @param name the name of the file .dot
      * @throws IOException the exception for manipulating the files
      */
+
     public void toDotFile(String name) throws IOException {
         File f = new File("DOT/" + name + ".dot");
         FileWriter fw = new FileWriter(f);
@@ -1026,6 +1058,97 @@ public class Graf {
         fw.close();
 
     }
+    /***
+     * Overloding toDotFile with no param name
+     * Function who exporting the graph as a file in the DOT syntax
+     */
+    public void toDotFile() {
+        String pathOfFileOutput = System.getProperty("user.dir") + "/" + "graph.dot"; //Current directory
+        try {
+            File ff = new File(pathOfFileOutput);
+            ff.createNewFile();
+            FileWriter ffw = new FileWriter(ff);
+            try {
+                ffw.write(toDotString());
+            } finally {
+                ffw.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Could not create file");
+        }
+    }
+
+
+    /***
+     * Function who read a file with dot formalism and create a graph
+     *
+     * @param path of the dot file
+     * @return a graph
+     */
+    public static Graf DotFileToGraph(String path) {
+        List<String> listDot = new  ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String line;
+            while ((line = br.readLine()) != null) {
+                //System.out.println(line);
+                listDot.add(line);
+            }
+            br.close();
+        } catch (Exception e) {
+            System.out.println("Could not open the dot file.");
+        }
+
+        int nbLineDotFile = listDot.size();
+        Graf g = null;
+
+
+        for (int i = 0; i < nbLineDotFile; i++) {
+            if (listDot.get(i).equals("\n")) {
+                continue;
+            }
+            if (i == 0) {
+                String[] line1 = listDot.get(i).split(" ");
+                if (line1[0].equals("digraph")) {
+                    g = new Graf();
+                }
+                if (line1[0].equals("graph")) {
+                    g = new UndirectedGraf();
+                }
+            }
+            String[] arrOfStr = listDot.get(i).split(" ");
+            if (i != 0 && i != nbLineDotFile-1) {
+                if (arrOfStr.length < 3) {
+                    String [] arrOfStrNode = arrOfStr[1].split(";");
+                    Node n1 = new Node(Integer.parseInt(arrOfStrNode[0]));
+                    g.addNode(n1);
+                }
+                if (arrOfStr.length >= 3) {
+                    String [] arrOfStrEdge = arrOfStr[3].split(";");
+                    Node n1 = new Node(Integer.parseInt(arrOfStr[1]));
+                    Node n2 = new Node(Integer.parseInt(arrOfStrEdge[0]));
+                    g.addNode(n1);
+                    g.addNode(n2);
+                    g.addEdge(n1, n2);
+                }
+            }
+        }
+
+        return g;
+    }
+
+    /***
+     * Create a PDF Image of a given graph with the DOT file
+     */
+    public void DotFileToPDFImage() {
+        toDotFile();
+        try {
+            Runtime.getRuntime().exec("dot -Tpdf graph.dot -o graph.pdf");
+        } catch (Exception e) {
+            System.out.println("Could not create the pdf image of the graph.");
+        }
+    }
+
 }
 
 
