@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.awt.GridBagLayout;//chosen JFrame layout
+import java.awt.GridBagLayout;
 import static java.awt.GridBagConstraints.*;
 import java.awt.GridBagConstraints;
 
@@ -26,14 +26,15 @@ public class Interface extends JFrame {
     public JButton removeAnEdgeButton;
     public JButton addAnEdgeButton;
     public JButton removeANodeButton;
-    public Graf graph;
+    private JTree CurrentGraph;
+    public Graf graph = new Graf();
     public String Namegraph = "random";
 
     public Interface() {
-        this.setTitle("TP Graph");
+        this.setTitle("Graph manipulation");
         this.pack();
         this.setContentPane(test);
-        this.setSize(300, 550);
+        this.setSize(800, 550);
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
@@ -46,7 +47,7 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("Name of the graph : ");
                 JTextField inputname = new JTextField("", 10);
@@ -72,7 +73,7 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                 frame.setLocation(x, y);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
                 next.addActionListener(new ActionListener() {
                     @Override
@@ -86,17 +87,17 @@ public class Interface extends JFrame {
                             JOptionPane.showMessageDialog(frame, "Input musn't be null");
                             frame.dispose();
                         }
-                       if (checked) {
+                        if (checked) {
                             if (weighted.isSelected()) {
                                 if (undirected.isSelected()) {
-                                   // graph = new UndirectedGraf(true);
+                                    graph = new UndirectedGraf(true);
                                 } else {
-                                   // graph = new Graf(true);
+                                    graph = new Graf(true);
                                 }
                             } else {
                                 if (undirected.isSelected()) {
-                                   // graph = new UndirectedGraf(false);
-                                } //else graph = new Graf(false);
+                                    graph = new UndirectedGraf(false);
+                                } else graph = new Graf(false);
                             }
                             frame.dispose();
                             Namegraph = inputname.getText();
@@ -128,7 +129,7 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame1 = new JFrame();
-                frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("Number of the node : ");
                 final JTextField inputname = new JTextField("", 10);
@@ -149,7 +150,7 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame1.getHeight()) / 2);
                 frame1.setLocation(x, y);
                 frame1.setVisible(true);
-                frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame1.setResizable(false);
                 next.addActionListener(new ActionListener() {
 
@@ -186,7 +187,7 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("Number of the node : ");
                 JTextField inputname = new JTextField("", 10);
@@ -205,7 +206,7 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                 frame.setLocation(x, y);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
                 next.addActionListener(new ActionListener() {
 
@@ -241,7 +242,7 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("Add the node from : ");
                 JTextField inputfrom = new JTextField("", 16);
@@ -272,15 +273,15 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                 frame.setLocation(x, y);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
-               /* if (graph.isWeighted()) {
+                if (graph.isWeighted()) {
                     weightinput.setVisible(true);
                     weight.setVisible(true);
                 } else {
                     weightinput.setVisible(false);
                     weight.setVisible(false);
-                }*/
+                }
 
                 next.addActionListener(new ActionListener() {
 
@@ -326,7 +327,7 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("Number of the node from : ");
                 JTextField inputfrom = new JTextField("", 10);
@@ -349,7 +350,7 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                 frame.setLocation(x, y);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
                 next.addActionListener(new ActionListener() {
                     @Override
@@ -385,7 +386,7 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("DOT Format created succesfully!");
                 addpane.add(graphname);
@@ -400,7 +401,7 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                 frame.setLocation(x, y);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
                 next.addActionListener(new ActionListener() {
 
@@ -408,7 +409,7 @@ public class Interface extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         frame.dispose();
                         try {
-                            graph.toDotFile("test");
+                            graph.toDotFile(Namegraph);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
@@ -420,7 +421,7 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("Graph reversed succesfully!");
                 addpane.add(graphname);
@@ -435,14 +436,14 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                 frame.setLocation(x, y);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
                 next.addActionListener(new ActionListener() {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         frame.dispose();
-                        //graph = graph.getReverseGraph();
+                        graph = graph.getReverse();
                     }
                 });
             }
@@ -452,7 +453,7 @@ public class Interface extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     final JFrame frame = new JFrame();
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     final JPanel addpane = new JPanel();
                     JLabel graphname = new JLabel("The transitive closure of the graph is : ");
 
@@ -472,7 +473,7 @@ public class Interface extends JFrame {
                     int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                     frame.setLocation(x, y);
                     frame.setVisible(true);
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.setResizable(false);
                     next.addActionListener(new ActionListener() {
 
@@ -489,12 +490,12 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("The DFS of the graph is : ");
                 JTextArea closure = new JTextArea("[");
-               /* for (Node n : graph.getDFS())
-                    closure.append(Integer.toString(n.getNumber()) + ",");*/
+                for (Node n : graph.getDFS())
+                    closure.append(Integer.toString(n.getId()) + ",");
                 closure.append("]");
                 addpane.add(graphname);
                 addpane.add(closure);
@@ -509,7 +510,7 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                 frame.setLocation(x, y);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
                 next.addActionListener(new ActionListener() {
 
@@ -524,12 +525,12 @@ public class Interface extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("The BFS of the graph is : ");
                 JTextArea closure = new JTextArea("[");
-               /* for (Node n : graph.getBFS())
-                   closure.append(Integer.toString(n.getNumber()) + ",");*/
+                for (Node n : graph.getBFS())
+                    closure.append(Integer.toString(n.getId()) + ",");
                 closure.append("]");
                 addpane.add(graphname);
                 addpane.add(closure);
@@ -544,7 +545,7 @@ public class Interface extends JFrame {
                 int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
                 frame.setLocation(x, y);
                 frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setResizable(false);
                 next.addActionListener(new ActionListener() {
 
@@ -582,19 +583,10 @@ public class Interface extends JFrame {
         menuBar.setVisible(true);
         graphiz.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                String s;
-                Process p;
                 try {
-                    p = Runtime.getRuntime().exec("dot -Tpdf DOT/" + Namegraph + ".dot -o PDF/" + Namegraph + ".pdf");
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader(p.getInputStream()));
-                    while ((s = br.readLine()) != null)
-                        System.out.println("line: " + s);
-                    p.waitFor();
-                    System.out.println("exit: " + p.exitValue());
-                    p.destroy();
-                    JOptionPane.showMessageDialog(null, "Graphiz generated succesfully check PDF path");
-                } catch (Exception e) {
+                    graph.DotFileToPDFImage(Namegraph);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -635,8 +627,9 @@ public class Interface extends JFrame {
         String name = JOptionPane.showInputDialog(frame, "Enter the number of nodes");
         try {
             int x = Integer.parseInt(name);
-            //RandomGraph f = new RandomGraph();
-            //graph = f.RandomConnectedGraph(x);
+            RandomGraph f = new RandomGraph();
+            graph = f.RandomConnectedGraph(x);
+            Namegraph = "random";
             addANodeButton.setEnabled(true);
             DFSFormButton.setEnabled(true);
             BFSFormButton.setEnabled(true);
@@ -658,9 +651,9 @@ public class Interface extends JFrame {
         JFrame frame = new JFrame("InputDialog Example #1");
         String name = JOptionPane.showInputDialog(frame, "Enter the number of nodes");
         try {
-            //RandomGraph f = new RandomGraph();
+            RandomGraph f = new RandomGraph();
             int x = Integer.parseInt(name);
-            // graph = f.RandomDanseGraph(x);
+            graph = f.RandomDanseGraph(x);
             addANodeButton.setEnabled(true);
             DFSFormButton.setEnabled(true);
             BFSFormButton.setEnabled(true);
@@ -683,8 +676,8 @@ public class Interface extends JFrame {
         String name = JOptionPane.showInputDialog(frame, "Enter the number of nodes");
         try {
             int x = Integer.parseInt(name);
-            //RandomGraph f = new RandomGraph();
-            //  graph = f.RandomSpareGraph(x);
+            RandomGraph f = new RandomGraph();
+            graph = f.RandomSpareGraph(x);
             addANodeButton.setEnabled(true);
             DFSFormButton.setEnabled(true);
             BFSFormButton.setEnabled(true);
@@ -707,8 +700,8 @@ public class Interface extends JFrame {
         String name = JOptionPane.showInputDialog(frame, "Enter the number of nodes");
         try {
             int x = Integer.parseInt(name);
-            //RandomGraph f = new RandomGraph();
-            //graph = f.RandomDanseGraph(x);
+            RandomGraph f = new RandomGraph();
+            graph = f.RandomDanseGraph(x);
             addANodeButton.setEnabled(true);
             DFSFormButton.setEnabled(true);
             BFSFormButton.setEnabled(true);
@@ -731,8 +724,8 @@ public class Interface extends JFrame {
         String name = JOptionPane.showInputDialog(frame, "Enter the number of nodes");
         try {
             int x = Integer.parseInt(name);
-            //RandomGraph f = new RandomGraph();
-            //graph = f.RandomDirectedGraph(x);
+            RandomGraph f = new RandomGraph();
+            graph = f.RandomDirectedGraph(x);
             addANodeButton.setEnabled(true);
             DFSFormButton.setEnabled(true);
             BFSFormButton.setEnabled(true);
@@ -755,8 +748,8 @@ public class Interface extends JFrame {
         String name = JOptionPane.showInputDialog(frame, "Enter the number of nodes");
         try {
             int x = Integer.parseInt(name);
-            //RandomGraph f = new RandomGraph();
-            //graph = f.RandomUndirectedGraph(x);
+            RandomGraph f = new RandomGraph();
+            graph = f.RandomUndirectedGraph(x);
             addANodeButton.setEnabled(true);
             DFSFormButton.setEnabled(true);
             BFSFormButton.setEnabled(true);
@@ -849,6 +842,15 @@ public class Interface extends JFrame {
         addANodeButton.setEnabled(false);
         addANodeButton.setText("Add a node");
         panel1.add(addANodeButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        test.add(panel2, BorderLayout.EAST);
+        CurrentGraph = new JTree();
+        CurrentGraph.setBackground(new Color(-855310));
+        panel2.add(CurrentGraph, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("Current Graph");
+        panel2.add(label3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -857,4 +859,5 @@ public class Interface extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return test;
     }
+
 }

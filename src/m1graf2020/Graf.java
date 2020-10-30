@@ -928,15 +928,15 @@ public class Graf {
         Arrays.fill(visited, false);
         while (!Nodes.isEmpty()) {
             Pile.addFirst(this.getAllNodes().get(0));
-            visited[Nodes.get(0).getId() - 1] = true;
+            visited[Nodes.get(0).getId() ] = true;
             list.add(Nodes.get(0));
             Nodes.remove(0);
             while (!Pile.isEmpty()) {
                 Node n = Pile.getFirst();
                 boolean changed = false;
                 for (Node x : this.getSuccessors(n)) {
-                    if (!visited[x.getId() - 1]) {
-                        visited[x.getId() - 1] = true;
+                    if (!visited[x.getId()]) {
+                        visited[x.getId() ] = true;
                         Pile.addFirst(x);
                         Nodes.remove(x);
                         list.add(x);
@@ -970,7 +970,7 @@ public class Graf {
 
         while (!Nodes.isEmpty()) {
             Queue.add(Nodes.get(0));
-            visited[Nodes.get(0).getId() - 1] = true;
+            visited[Nodes.get(0).getId()] = true;
             list.add(Nodes.get(0));
             Nodes.remove(0);
             while (!Queue.isEmpty()) {
@@ -978,8 +978,8 @@ public class Graf {
                 Node n = Queue.get(0);
                 for (Node x : this.getSuccessors(n)
                 ) {
-                    if (!visited[x.getId() - 1]) {
-                        visited[x.getId() - 1] = true;
+                    if (!visited[x.getId()]) {
+                        visited[x.getId() ] = true;
                         Queue.add(x);
                         list.add(x);
                         Nodes.remove(x);
@@ -1140,12 +1140,13 @@ public class Graf {
     /***
      * Create a PDF Image of a given graph with the DOT file
      */
-    public void DotFileToPDFImage() {
-        toDotFile();
+    public void DotFileToPDFImage(String graphname) throws IOException {
+        toDotFile(graphname);
+        System.out.println(graphname);
         try {
-            Runtime.getRuntime().exec("dot -Tpdf graph.dot -o graph.pdf");
+            Runtime.getRuntime().exec("dot -Tpdf .DOT/" +graphname+".dot -o graph.pdf");
         } catch (Exception e) {
-            System.out.println("Could not create the pdf image of the graph.");
+            e.printStackTrace();
         }
     }
 
