@@ -970,7 +970,7 @@ public class Graf {
 
         while (!Nodes.isEmpty()) {
             Queue.add(Nodes.get(0));
-            visited[Nodes.get(0).getId()] = true;
+            visited[Nodes.get(0).getId() ] = true;
             list.add(Nodes.get(0));
             Nodes.remove(0);
             while (!Queue.isEmpty()) {

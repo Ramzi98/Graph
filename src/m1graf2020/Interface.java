@@ -472,11 +472,9 @@ public class Interface extends JFrame {
                     final JFrame frame = new JFrame();
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     final JPanel addpane = new JPanel();
-                    JLabel graphname = new JLabel("The transitive closure of the graph is : \n");
-
+                    JLabel graphname = new JLabel("The transitive closure of the graph is : ");
                     String test = graph.getTransitiveClosure().toDotString();
                     JLabel closure = new JLabel("<html><p style=\"width:30px\">" + graph.getTransitiveClosure().toDotString().substring(68) + "</p></html>");
-
                     addpane.add(graphname);
                     addpane.add(closure);
                     JButton next = new JButton("Continue");
@@ -510,7 +508,10 @@ public class Interface extends JFrame {
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("The DFS of the graph is : ");
+                addpane.setLayout(new BoxLayout(addpane, BoxLayout.Y_AXIS));
+                frame.
                 JTextArea closure = new JTextArea("[");
+                closure.setEditable(false);
                 for (Node n : graph.getDFS())
                     closure.append(Integer.toString(n.getId()) + ",");
                 closure.append("]");
@@ -546,6 +547,7 @@ public class Interface extends JFrame {
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("The BFS of the graph is : ");
                 JTextArea closure = new JTextArea("[");
+                closure.setEditable(false);
                 for (Node n : graph.getBFS())
                     closure.append(Integer.toString(n.getId()) + ",");
                 closure.append("]");
