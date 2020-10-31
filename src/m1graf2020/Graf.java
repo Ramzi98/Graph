@@ -49,7 +49,7 @@ public class Graf {
      */
     public Graf(int... Nodes) {
         this.weighted = false;
-        int sourceNoude = 1;
+        int sourceNoude = 0;
         for (int currentNode : Nodes) {
             if (currentNode == 0) {
                 if (!existsNode(sourceNoude)) {
