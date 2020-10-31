@@ -509,7 +509,6 @@ public class Interface extends JFrame {
                 final JPanel addpane = new JPanel();
                 JLabel graphname = new JLabel("The DFS of the graph is : ");
                 addpane.setLayout(new BoxLayout(addpane, BoxLayout.Y_AXIS));
-                frame.
                 JTextArea closure = new JTextArea("[");
                 closure.setEditable(false);
                 for (Node n : graph.getDFS())
