@@ -49,7 +49,7 @@ public class Graf {
      */
     public Graf(int... Nodes) {
         this.weighted = false;
-        int sourceNoude = 0;
+        int sourceNoude = 1;
         for (int currentNode : Nodes) {
             if (currentNode == 0) {
                 if (!existsNode(sourceNoude)) {
@@ -846,10 +846,13 @@ public class Graf {
      * @return a new graph represent the transitive closure of a graph
      */
     public Graf getTransitiveClosure() throws Exceptiongraf {
-        Graf TC = this;
+        Graf TC = new Graf();
+        for(Edge edge : getAllEdges())
+        {
+            TC.addEdge(edge.getStartnode(),edge.getEndnode());
+        }
 
         boolean changed = true;
-
         while (changed) {
             changed = false;
             for (Node n : TC.getAllNodes())
@@ -887,7 +890,24 @@ public class Graf {
             }
 
         }
-        return TC;
+
+        Graf TC1 = new Graf();
+        for(Node node : getAllNodes())
+        {
+            List<Node> sucWithoutDuplicates = new ArrayList<>(new HashSet<>(TC.getSuccessors(node)));
+            for (Node n : sucWithoutDuplicates)
+            {
+                TC1.addEdge(node,n);
+                int occurrences = Collections.frequency(this.getSuccessors(node), n);
+                for (int i = 0; i < occurrences-1; i++) {
+                    TC1.addEdge(node,n);
+                }
+
+            }
+
+        }
+        Collections.sort(TC1.getAllEdges());
+        return TC1;
 
     }
 
@@ -1026,7 +1046,6 @@ public class Graf {
     String toDotString() {
         String dotStringGraph = "digraph g {\n";
 
-
         for (Map.Entry<Node, List<Node>> entry : adjList.entrySet()) {
             int nodeFrom = entry.getKey().getId();
             if(entry.getValue().size()==0)
@@ -1149,8 +1168,12 @@ public class Graf {
         toDotFile(graphname);
         String workingDir = System.getProperty("user.dir");
         String dir = workingDir+"\\DOT\\";
+        String pdfdir = workingDir+"\\PDF\\";
+        File file = new File(pdfdir);
+        file.mkdirs();
+
         try {
-            Runtime.getRuntime().exec("dot -Tpdf "+dir+graphname+".dot -o "+graphname+".pdf");
+            Runtime.getRuntime().exec("dot -Tpdf "+dir+graphname+".dot -o "+pdfdir+graphname+".pdf");
         } catch (Exception e) {
             e.printStackTrace();
         }
