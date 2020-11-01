@@ -703,22 +703,21 @@ public class Graf {
      * @return an array for obtaining a representation of the graph in the successor array formalism
      */
     int[] toSuccessorArray() {
-        List<Node> nodes = getAllNodes();
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        for (Node currentnode : nodes) {
-            arrayList.add(currentnode.getId());
-            for (Node othernode : nodes) {
-                if (existsEdge(currentnode, othernode)) {
-                    arrayList.add(othernode.getId());
-                }
+        sortMapNodeByKey();
+        int nb_edge = nbEdges();
+        int taille = nb_edge + nbNodes();
+        int[] SA = new int[taille];
+        int j = 0;
+        for (Map.Entry<Node, List<Node>> entry : adjList.entrySet()) {
+            int size = entry.getValue().size();
+            for (int i = 0; i < size; i++) {
+                SA[j] = entry.getValue().get(i).getId();
+                j++;
             }
-            arrayList.add(0);
+            SA[j] = 0;
+            j++;
         }
-        int[] SA = new int[arrayList.size()];
-        for (int i = 0; i < arrayList.size(); i++) {
-            SA[i] = arrayList.get(i);
-        }
-        return SA;
+        return  SA;
     }
 
     /***
@@ -727,29 +726,31 @@ public class Graf {
      * @return the matrix of the given graph
      */
     int[][] toAdjMatrix() {
+        sortMapNodeByKey();
         List<Edge> edges = getAllEdges();
         List<Node> nodes = getAllNodes();
-        int startnode, endnode;
-        int max = 0, max1;
-        //Recuperation d'ID max
-        for (int i = 0; i < (nodes.size() - 1); i++) {
-            max1 = Math.max(nodes.get(i).getId(), nodes.get(i + 1).getId());
-            if (max < max1) {
-                max = max1;
-            }
-        }
-        int[][] adjMatrix = new int[max + 1][max + 1];
+        int nbr_node = nbNodes();
+        int[][] adjMatrix = new int[nbr_node][nbr_node];
+        int [] successorArray = toSuccessorArray();
+        int SAlength = successorArray.length;
         //initialisation
-        for (int i = 0; i <= max; i++) {
-            for (int j = 0; j <= max; j++) {
+        for (int i = 0; i < nbr_node; i++) {
+            for (int j = 0; j < nbr_node; j++) {
                 adjMatrix[i][j] = 0;
             }
         }
-        for (Edge edge : edges) {
-            startnode = edge.getStartnode().getId();
-            endnode = edge.getEndnode().getId();
-            adjMatrix[startnode][endnode]++;
+        int sourcenode = 1;
+        for (int i = 0; i < SAlength ; i++) {
+            if(successorArray[i] == 0)
+            {
+                sourcenode++;
+            }
+            else
+            {
+                adjMatrix[sourcenode-1][successorArray[i]-1]++;
+            }
         }
+
         return adjMatrix;
     }
 
@@ -928,7 +929,7 @@ public class Graf {
         Arrays.fill(visited, false);
         while (!Nodes.isEmpty()) {
             Pile.addFirst(this.getAllNodes().get(0));
-            visited[Nodes.get(0).getId() ] = true;
+            visited[Nodes.get(0).getId()] = true;
             list.add(Nodes.get(0));
             Nodes.remove(0);
             while (!Pile.isEmpty()) {
@@ -1052,7 +1053,7 @@ public class Graf {
      */
 
     public void toDotFile(String name) throws IOException {
-        File f = new File("DOT/" + name + ".dot");
+        File f = new File( name + ".dot");
         FileWriter fw = new FileWriter(f);
         fw.write(this.toDotString());
         fw.close();
