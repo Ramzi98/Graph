@@ -1,6 +1,7 @@
 package m1graf2020;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +36,7 @@ public class Interface extends JFrame {
         this.setTitle("Graph manipulation");
         this.pack();
         this.setContentPane(test);
-        this.setSize(350, 550);
+        this.setSize(700, 550);
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
@@ -473,17 +474,22 @@ public class Interface extends JFrame {
                     final JFrame frame = new JFrame();
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     final JPanel addpane = new JPanel();
+                    addpane.setBackground(Color.WHITE);
+                    frame.setBackground(Color.WHITE);
                     JLabel graphname = new JLabel("The transitive closure of the graph is : ");
-                    String test = graph.getTransitiveClosure().toDotString();
-                    JLabel closure = new JLabel("<html><p style=\"width:30px\">" + graph.getTransitiveClosure().toDotString().substring(68) + "</p></html>");
-                    addpane.add(graphname);
-                    addpane.add(closure);
-                    JButton next = new JButton("Continue");
-                    addpane.add(next);
+                    addpane.setBorder(new EmptyBorder(0, 50, 50, 50));
+                    frame.setLayout(new GridBagLayout());
+                    GridBagConstraints gbc = new GridBagConstraints();
+                    gbc.gridwidth = REMAINDER;
+                    gbc.fill = HORIZONTAL;
+                    JTextArea closure = new JTextArea(graph.getTransitiveClosure().toDotString());
+                    closure.setEditable(false);
+                    addpane.add(graphname, gbc);
+                    addpane.add(closure, gbc);
                     frame.setTitle("Transitive Closure");
                     frame.pack();
                     frame.setContentPane(addpane);
-                    frame.setSize(300, 400);
+                    frame.setSize(300, 700);
                     Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
                     int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
                     int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
@@ -491,13 +497,6 @@ public class Interface extends JFrame {
                     frame.setVisible(true);
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.setResizable(false);
-                    next.addActionListener(new ActionListener() {
-
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            frame.dispose();
-                        }
-                    });
                 } catch (Exception ex) {
                 }
             }
@@ -508,14 +507,12 @@ public class Interface extends JFrame {
                 final JFrame frame = new JFrame();
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
-                JLabel graphname = new JLabel("The DFS of the graph is : ");
                 addpane.setLayout(new BoxLayout(addpane, BoxLayout.Y_AXIS));
                 JTextArea closure = new JTextArea("[");
                 closure.setEditable(false);
                 for (Node n : graph.getDFS())
                     closure.append(Integer.toString(n.getId()) + ",");
                 closure.append("]");
-                addpane.add(graphname);
                 addpane.add(closure);
                 JButton next = new JButton("Continue");
                 addpane.add(next);
@@ -545,13 +542,12 @@ public class Interface extends JFrame {
                 final JFrame frame = new JFrame();
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 final JPanel addpane = new JPanel();
-                JLabel graphname = new JLabel("The BFS of the graph is : ");
+                addpane.setLayout(new BoxLayout(addpane, BoxLayout.Y_AXIS));
                 JTextArea closure = new JTextArea("[");
                 closure.setEditable(false);
                 for (Node n : graph.getBFS())
                     closure.append(Integer.toString(n.getId()) + ",");
                 closure.append("]");
-                addpane.add(graphname);
                 addpane.add(closure);
                 JButton next = new JButton("Continue");
                 addpane.add(next);
@@ -583,15 +579,20 @@ public class Interface extends JFrame {
         JMenu menu2 = new JMenu("Graphviz");
         JMenuItem graphviz = new JMenuItem("Display Graphviz");
         JMenu menu1 = new JMenu("Generate");
+        JMenu menu3 = new JMenu("Divers");
         JMenuItem directed = new JMenuItem("Directed graph");
         JMenuItem undirected = new JMenuItem("Undirected graph");
         JMenuItem dag = new JMenuItem("DAG graph");
         JMenuItem sparse = new JMenuItem("Sparse graph");
         JMenuItem dense = new JMenuItem("Dense graph");
         JMenuItem connected = new JMenuItem("Connected graph");
+        JMenuItem SuccessorArray = new JMenuItem("Successor Array");
+        JMenuItem nodesDisplay = new JMenuItem("Get all nodes");
+        JMenuItem edgesDisplay = new JMenuItem("Get all edges");
 
         menuBar.add(menu1);
         menuBar.add(menu2);
+        menuBar.add(menu3);
         menu2.add(graphviz);
         menu1.add(directed);
         menu1.add(undirected);
@@ -599,6 +600,10 @@ public class Interface extends JFrame {
         menu1.add(sparse);
         menu1.add(dense);
         menu1.add(connected);
+        menu3.add(SuccessorArray);
+        menu3.add(nodesDisplay);
+        menu3.add(edgesDisplay);
+
         this.setJMenuBar(menuBar);
         menuBar.setVisible(true);
         graphviz.addActionListener(new ActionListener() {
@@ -608,6 +613,22 @@ public class Interface extends JFrame {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        SuccessorArray.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                SuccessorEvt(evt);
+            }
+        });
+        nodesDisplay.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                NodesEvt(evt);
+            }
+        });
+        edgesDisplay.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                EdgesEvt(evt);
             }
         });
         directed.addActionListener(new ActionListener() {
@@ -640,6 +661,85 @@ public class Interface extends JFrame {
                 RandomConnected(evt);
             }
         });
+    }
+
+    private void EdgesEvt(ActionEvent evt) {
+        final JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        final JPanel addpane = new JPanel();
+        addpane.setLayout(new BoxLayout(addpane, BoxLayout.Y_AXIS));
+        JTextArea closure = new JTextArea();
+        closure.setEditable(false);
+        for (Edge edge : graph.getAllEdges()) {
+            closure.append(edge.getStartnode().toString() + " -> " + edge.getEndnode().toString() + "\n");
+        }
+        addpane.add(closure);
+        frame.setTitle("All nodes");
+        frame.pack();
+        frame.setContentPane(addpane);
+        frame.setSize(300, 500);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setResizable(false);
+
+    }
+
+    private void NodesEvt(ActionEvent evt) {
+        final JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        final JPanel addpane = new JPanel();
+        addpane.setLayout(new BoxLayout(addpane, BoxLayout.Y_AXIS));
+        JTextArea closure = new JTextArea("[");
+        closure.setEditable(false);
+        for (Node node : graph.getAllNodes()) {
+            closure.append(node.getId().toString() + ", ");
+        }
+
+        closure.append("]");
+        addpane.add(closure);
+        frame.setTitle("All Nodes");
+        frame.pack();
+        frame.setContentPane(addpane);
+        frame.setSize(300, 150);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setResizable(false);
+
+    }
+
+    private void SuccessorEvt(ActionEvent evt) {
+        final JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        final JPanel addpane = new JPanel();
+        addpane.setLayout(new BoxLayout(addpane, BoxLayout.Y_AXIS));
+        JTextArea closure = new JTextArea("[");
+        closure.setEditable(false);
+        int[] sucess = graph.toSuccessorArray();
+        for (int i = 0; i < sucess.length; i++) {
+            closure.append(String.valueOf(sucess[i] + " , "));
+        }
+        closure.append("]");
+        addpane.add(closure);
+        frame.setTitle("Successors Array");
+        frame.pack();
+        frame.setContentPane(addpane);
+        frame.setSize(500, 150);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setResizable(false);
+
     }
 
     private void RandomConnected(ActionEvent evt) {
@@ -819,48 +919,9 @@ public class Interface extends JFrame {
         test = new JPanel();
         test.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(15, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(9, 7, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setBackground(new Color(-16777216));
         test.add(panel1, BorderLayout.CENTER);
-        createAnEmptyGraphButton = new JButton();
-        createAnEmptyGraphButton.setBackground(new Color(-8026747));
-        createAnEmptyGraphButton.setEnabled(true);
-        createAnEmptyGraphButton.setForeground(new Color(-1));
-        createAnEmptyGraphButton.setHideActionText(false);
-        createAnEmptyGraphButton.setRequestFocusEnabled(false);
-        createAnEmptyGraphButton.setText("Create an empty graph");
-        createAnEmptyGraphButton.setVerifyInputWhenFocusTarget(false);
-        panel1.add(createAnEmptyGraphButton, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        BFSFormButton = new JButton();
-        BFSFormButton.setBackground(new Color(-8026747));
-        BFSFormButton.setEnabled(false);
-        BFSFormButton.setForeground(new Color(-1));
-        BFSFormButton.setText("BFS Form");
-        panel1.add(BFSFormButton, new com.intellij.uiDesigner.core.GridConstraints(12, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        DFSFormButton = new JButton();
-        DFSFormButton.setBackground(new Color(-8026747));
-        DFSFormButton.setEnabled(false);
-        DFSFormButton.setForeground(new Color(-1));
-        DFSFormButton.setText("DFS Form");
-        panel1.add(DFSFormButton, new com.intellij.uiDesigner.core.GridConstraints(11, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        transitiveClosureButton = new JButton();
-        transitiveClosureButton.setBackground(new Color(-8026747));
-        transitiveClosureButton.setEnabled(false);
-        transitiveClosureButton.setForeground(new Color(-1));
-        transitiveClosureButton.setText("Transitive closure ");
-        panel1.add(transitiveClosureButton, new com.intellij.uiDesigner.core.GridConstraints(10, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        reverseTheGraphButton = new JButton();
-        reverseTheGraphButton.setBackground(new Color(-8026747));
-        reverseTheGraphButton.setEnabled(false);
-        reverseTheGraphButton.setForeground(new Color(-1));
-        reverseTheGraphButton.setText("Reverse the graph");
-        panel1.add(reverseTheGraphButton, new com.intellij.uiDesigner.core.GridConstraints(9, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        DOTFormatButton = new JButton();
-        DOTFormatButton.setBackground(new Color(-8026747));
-        DOTFormatButton.setEnabled(false);
-        DOTFormatButton.setForeground(new Color(-1));
-        DOTFormatButton.setText("DOT Format");
-        panel1.add(DOTFormatButton, new com.intellij.uiDesigner.core.GridConstraints(8, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
         removeAnEdgeButton = new JButton();
         removeAnEdgeButton.setBackground(new Color(-8026747));
         removeAnEdgeButton.setEnabled(false);
@@ -879,31 +940,65 @@ public class Interface extends JFrame {
         removeANodeButton.setForeground(new Color(-1));
         removeANodeButton.setText("Remove a node");
         panel1.add(removeANodeButton, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        addANodeButton = new JButton();
-        addANodeButton.setBackground(new Color(-8026747));
-        addANodeButton.setEnabled(false);
-        addANodeButton.setForeground(new Color(-1));
-        addANodeButton.setText("Add a node");
-        panel1.add(addANodeButton, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        showCurrentGraphInButton = new JButton();
-        showCurrentGraphInButton.setBackground(new Color(-8026747));
-        showCurrentGraphInButton.setEnabled(false);
-        showCurrentGraphInButton.setForeground(new Color(-1));
-        showCurrentGraphInButton.setText("Show current graph in Tree Form");
-        panel1.add(showCurrentGraphInButton, new com.intellij.uiDesigner.core.GridConstraints(13, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
         MenuPrincipal = new JLabel();
         MenuPrincipal.setBackground(new Color(-16777216));
         Font MenuPrincipalFont = this.$$$getFont$$$("JetBrains Mono", Font.BOLD, 26, MenuPrincipal.getFont());
         if (MenuPrincipalFont != null) MenuPrincipal.setFont(MenuPrincipalFont);
         MenuPrincipal.setForeground(new Color(-1));
         MenuPrincipal.setText("Menu Principal");
-        panel1.add(MenuPrincipal, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(14, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        final com.intellij.uiDesigner.core.Spacer spacer3 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_NORTH, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.add(MenuPrincipal, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 7, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        createAnEmptyGraphButton = new JButton();
+        createAnEmptyGraphButton.setBackground(new Color(-8026747));
+        createAnEmptyGraphButton.setEnabled(true);
+        createAnEmptyGraphButton.setForeground(new Color(-1));
+        createAnEmptyGraphButton.setHideActionText(false);
+        createAnEmptyGraphButton.setRequestFocusEnabled(false);
+        createAnEmptyGraphButton.setText("Create an empty graph");
+        createAnEmptyGraphButton.setVerifyInputWhenFocusTarget(false);
+        panel1.add(createAnEmptyGraphButton, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        showCurrentGraphInButton = new JButton();
+        showCurrentGraphInButton.setBackground(new Color(-8026747));
+        showCurrentGraphInButton.setEnabled(false);
+        showCurrentGraphInButton.setForeground(new Color(-1));
+        showCurrentGraphInButton.setText("Show current graph in Tree Form");
+        panel1.add(showCurrentGraphInButton, new com.intellij.uiDesigner.core.GridConstraints(8, 0, 1, 7, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        DOTFormatButton = new JButton();
+        DOTFormatButton.setAlignmentX(0.0f);
+        DOTFormatButton.setBackground(new Color(-8026747));
+        DOTFormatButton.setEnabled(false);
+        DOTFormatButton.setForeground(new Color(-1));
+        DOTFormatButton.setText("DOT Format");
+        panel1.add(DOTFormatButton, new com.intellij.uiDesigner.core.GridConstraints(3, 6, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        transitiveClosureButton = new JButton();
+        transitiveClosureButton.setBackground(new Color(-8026747));
+        transitiveClosureButton.setEnabled(false);
+        transitiveClosureButton.setForeground(new Color(-1));
+        transitiveClosureButton.setText("Transitive closure ");
+        panel1.add(transitiveClosureButton, new com.intellij.uiDesigner.core.GridConstraints(4, 6, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        reverseTheGraphButton = new JButton();
+        reverseTheGraphButton.setBackground(new Color(-8026747));
+        reverseTheGraphButton.setEnabled(false);
+        reverseTheGraphButton.setForeground(new Color(-1));
+        reverseTheGraphButton.setText("Reverse the graph");
+        panel1.add(reverseTheGraphButton, new com.intellij.uiDesigner.core.GridConstraints(5, 6, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        BFSFormButton = new JButton();
+        BFSFormButton.setBackground(new Color(-8026747));
+        BFSFormButton.setEnabled(false);
+        BFSFormButton.setForeground(new Color(-1));
+        BFSFormButton.setText("BFS Form");
+        panel1.add(BFSFormButton, new com.intellij.uiDesigner.core.GridConstraints(6, 6, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        DFSFormButton = new JButton();
+        DFSFormButton.setBackground(new Color(-8026747));
+        DFSFormButton.setEnabled(false);
+        DFSFormButton.setForeground(new Color(-1));
+        DFSFormButton.setText("DFS Form");
+        panel1.add(DFSFormButton, new com.intellij.uiDesigner.core.GridConstraints(7, 6, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        addANodeButton = new JButton();
+        addANodeButton.setBackground(new Color(-8026747));
+        addANodeButton.setEnabled(false);
+        addANodeButton.setForeground(new Color(-1));
+        addANodeButton.setText("Add a node");
+        panel1.add(addANodeButton, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
     }
 
     /**

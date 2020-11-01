@@ -30,17 +30,6 @@ public class TreeExample extends JFrame
         this.setLocation(x, y);
         this.setVisible(true);
     }
-
-    public static void main(String[] args)
-    {
-        Graf graf = new Graf(1,2,0,1,3,4,0,4,3);
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new TreeExample(graf);
-            }
-        });
-    }
     public void EditsTree(Graf g) {
         for(Node node : g.getAllNodes()) {
             DefaultMutableTreeNode parent = new DefaultMutableTreeNode(node.getId().toString());
