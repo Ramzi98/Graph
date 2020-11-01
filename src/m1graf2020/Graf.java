@@ -922,9 +922,19 @@ public class Graf {
      * @return a list of Node that represent the DFS algorithm
      */
     public List<Node> getDFS() {
+        List<Node> nodes = getAllNodes();
+        int max = 0, max1;
+        //Recuperation d'ID max
+        for (int i = 0; i < (nodes.size() - 1); i++) {
+            max1 = Math.max(nodes.get(i).getId(), nodes.get(i + 1).getId());
+            if (max < max1) {
+                max = max1;
+            }
+        }
+
         List<Node> list = new ArrayList<>();
         LinkedList<Node> Pile = new LinkedList<>();
-        Boolean[] visited = new Boolean[this.getAllNodes().size()];
+        Boolean[] visited = new Boolean[max+1];
         List<Node> Nodes = this.getAllNodes();
         Arrays.fill(visited, false);
         while (!Nodes.isEmpty()) {
@@ -962,9 +972,19 @@ public class Graf {
      * @return a list of node that represent the BFS
      */
     public List<Node> getBFS() {
+        List<Node> nodes = getAllNodes();
+        int max = 0, max1;
+        //Recuperation d'ID max
+        for (int i = 0; i < (nodes.size() - 1); i++) {
+            max1 = Math.max(nodes.get(i).getId(), nodes.get(i + 1).getId());
+            if (max < max1) {
+                max = max1;
+            }
+        }
+
         List<Node> list = new ArrayList<>();
         LinkedList<Node> Queue = new LinkedList<>();
-        Boolean[] visited = new Boolean[this.getAllNodes().size()];
+        Boolean[] visited = new Boolean[max+1];
         List<Node> Nodes = this.getAllNodes();
 
         Arrays.fill(visited, false);
