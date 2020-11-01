@@ -1143,18 +1143,18 @@ public class Graf {
 
     /***
      * Create a PDF Image of a given graph with the DOT file
+     * @param graphname the name of the graph
      */
     public void DotFileToPDF(String graphname) throws IOException {
         toDotFile(graphname);
         String workingDir = System.getProperty("user.dir");
-        String dir = workingDir+"\\DOT";
+        String dir = workingDir+"\\DOT\\";
         try {
-            Runtime.getRuntime().exec("dot -Tpdf "+dir+"\\"+graphname+".dot -o "+graphname+".pdf");
+            Runtime.getRuntime().exec("dot -Tpdf "+dir+graphname+".dot -o "+graphname+".pdf");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
 
 

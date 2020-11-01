@@ -5,12 +5,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.awt.GridBagLayout;
-import static java.awt.GridBagConstraints.*;
-import java.awt.GridBagConstraints;
+
+import static java.awt.GridBagConstraints.HORIZONTAL;
+import static java.awt.GridBagConstraints.REMAINDER;
 
 /***
  * The interface class of our project of graph
@@ -674,7 +672,7 @@ public class Interface extends JFrame {
             closure.append(edge.getStartnode().toString() + " -> " + edge.getEndnode().toString() + "\n");
         }
         addpane.add(closure);
-        frame.setTitle("All nodes");
+        frame.setTitle("All Edges");
         frame.pack();
         frame.setContentPane(addpane);
         frame.setSize(300, 500);
@@ -824,7 +822,7 @@ public class Interface extends JFrame {
         try {
             int x = Integer.parseInt(name);
             RandomGraph f = new RandomGraph();
-            graph = f.RandomDanseGraph(x);
+            graph = f.RandomDagGraph(x);
             addANodeButton.setEnabled(true);
             DFSFormButton.setEnabled(true);
             BFSFormButton.setEnabled(true);

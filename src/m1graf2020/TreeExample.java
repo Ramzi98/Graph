@@ -1,6 +1,5 @@
 package m1graf2020;
 
-import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
@@ -8,12 +7,19 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
-import javax.swing.tree.DefaultMutableTreeNode;
 
+/***
+ * TreeExample class is the class who display a graph in Jtree Format
+ */
 public class TreeExample extends JFrame
 {
     private JTree tree;
     private DefaultMutableTreeNode root;
+
+    /**
+     * The constructor of Tree
+     * @param g is the graph that we create his Jtree Format
+     */
     public TreeExample(Graf g)
     {
         this.root = new DefaultMutableTreeNode("Graph");
@@ -30,6 +36,11 @@ public class TreeExample extends JFrame
         this.setLocation(x, y);
         this.setVisible(true);
     }
+
+    /**
+     * Function who edit a Tree of graph
+     * @param g is the graph that we Edit his Jtree Format
+     */
     public void EditsTree(Graf g) {
         for(Node node : g.getAllNodes()) {
             DefaultMutableTreeNode parent = new DefaultMutableTreeNode(node.getId().toString());

@@ -1,9 +1,17 @@
 package m1graf2020;
 
 import java.util.Random;
-
+/***
+ * RandomGraph class is the class who create random graph in different type
+ */
 public class RandomGraph
 {
+
+    /**
+     * Function who Create a Random Directed Graph
+     * @param j is the number of nodes to be created
+     * @return a Random Directed Graph
+     */
     public Graf RandomDirectedGraph(final int j) {
         final Graf p = new Graf();
         for (int i = 0; i < j; ++i) {
@@ -20,6 +28,11 @@ public class RandomGraph
         return p;
     }
 
+    /**
+     * Function who Create a Random Undirected Graph
+     * @param j is the number of nodes to be created
+     * @return a Random Undirected Graph
+     */
     public Graf RandomUndirectedGraph(final int j) {
         final Graf p = new Graf();
         for (int i = 0; i < j; ++i) {
@@ -37,6 +50,11 @@ public class RandomGraph
         return p;
     }
 
+    /**
+     * Function who Create a Random Dense Graph
+     * @param j is the number of nodes to be created
+     * @return a Random Dense Graph
+     */
     public Graf RandomDanseGraph(final int j) {
         final Graf p = new Graf();
         for (int i = 0; i < j; ++i) {
@@ -54,6 +72,11 @@ public class RandomGraph
         return p;
     }
 
+    /**
+     * Function who Create a Random Spare Graph
+     * @param j is the number of nodes to be created
+     * @return a Random Spare Graph
+     */
     public Graf RandomSpareGraph(final int j) {
         final Graf p = new Graf();
         for (int i = 0; i < j; ++i) {
@@ -76,6 +99,11 @@ public class RandomGraph
         return p;
     }
 
+    /**
+     * Function who Create a Random Connected Graph
+     * @param j is the number of nodes to be created
+     * @return a Random Connected Graph
+     */
     public Graf RandomConnectedGraph(final int j) {
         final Graf s = new Graf();
         final Random rand = new Random();
@@ -102,6 +130,11 @@ public class RandomGraph
         return s;
     }
 
+    /**
+     * Function who Create a Random Dag Graph
+     * @param j is the number of nodes to be created
+     * @return a Random Dag Graph
+     */
     public Graf RandomDagGraph(final int j) {
         final Graf s = new Graf();
         final Random rand = new Random();
@@ -126,4 +159,5 @@ public class RandomGraph
         }
         return s;
     }
+
 }

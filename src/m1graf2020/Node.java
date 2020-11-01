@@ -1,8 +1,6 @@
 package m1graf2020;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /***
  * Node is the class who create and compare the Nodes
