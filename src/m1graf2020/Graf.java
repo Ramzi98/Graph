@@ -1065,41 +1065,6 @@ public class Graf {
         return  dotStringGraph;
     }
 
-    /**
-     * this method convert the graph into DOT format and stock it in a the DOT repository
-     *
-     * @param name the name of the file .dot
-     * @throws IOException the exception for manipulating the files
-     */
-
-    public void toDotFile(String name) throws IOException {
-        File f = new File( name + ".dot");
-        FileWriter fw = new FileWriter(f);
-        fw.write(this.toDotString());
-        fw.close();
-
-    }
-    /***
-     * Overloding toDotFile with no param name
-     * Function who exporting the graph as a file in the DOT syntax
-     */
-    public void toDotFile() {
-        String pathOfFileOutput = System.getProperty("user.dir") + "/" + "graph.dot"; //Current directory
-        try {
-            File ff = new File(pathOfFileOutput);
-            ff.createNewFile();
-            FileWriter ffw = new FileWriter(ff);
-            try {
-                ffw.write(toDotString());
-            } finally {
-                ffw.close();
-            }
-        } catch (Exception e) {
-            System.out.println("Could not create file");
-        }
-    }
-
-
     /***
      * Function who read a file with dot formalism and create a graph
      *
@@ -1112,7 +1077,6 @@ public class Graf {
             BufferedReader br = new BufferedReader(new FileReader(path));
             String line;
             while ((line = br.readLine()) != null) {
-                //System.out.println(line);
                 listDot.add(line);
             }
             br.close();
@@ -1157,15 +1121,35 @@ public class Graf {
 
         return g;
     }
+    /**
+     * this method convert the graph into DOT format and stock it in a the DOT repository
+     *
+     * @param name the name of the file .dot
+     * @throws IOException the exception for manipulating the files
+     */
+
+    public void toDotFile(String name) throws IOException {
+        String workingDir = System.getProperty("user.dir");
+        String dir = workingDir+"\\DOT";
+        File file = new File(dir);
+        file.mkdirs();
+        File f = new File( dir+"\\"+name + ".dot");
+        FileWriter fw = new FileWriter(f);
+        fw.write(this.toDotString());
+        fw.close();
+
+    }
+
 
     /***
      * Create a PDF Image of a given graph with the DOT file
      */
-    public void DotFileToPDFImage(String graphname) throws IOException {
+    public void DotFileToPDF(String graphname) throws IOException {
         toDotFile(graphname);
-        System.out.println(graphname);
+        String workingDir = System.getProperty("user.dir");
+        String dir = workingDir+"\\DOT";
         try {
-            Runtime.getRuntime().exec("dot -Tpdf .DOT/" +graphname+".dot -o graph.pdf");
+            Runtime.getRuntime().exec("dot -Tpdf "+dir+"\\"+graphname+".dot -o "+graphname+".pdf");
         } catch (Exception e) {
             e.printStackTrace();
         }

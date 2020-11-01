@@ -112,6 +112,7 @@ public class Interface extends JFrame {
                             addANodeButton.setEnabled(true);
                             DOTFormatButton.setEnabled(true);
                             transitiveClosureButton.setEnabled(true);
+                            showCurrentGraphInButton.setEnabled(true);
                             createAnEmptyGraphButton.setEnabled(false);
                         }
                     }
@@ -579,8 +580,8 @@ public class Interface extends JFrame {
 
     public void setComponent() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu2 = new JMenu("Graphiz");
-        JMenuItem graphiz = new JMenuItem("Display Graphiz");
+        JMenu menu2 = new JMenu("Graphviz");
+        JMenuItem graphviz = new JMenuItem("Display Graphviz");
         JMenu menu1 = new JMenu("Generate");
         JMenuItem directed = new JMenuItem("Directed graph");
         JMenuItem undirected = new JMenuItem("Undirected graph");
@@ -591,7 +592,7 @@ public class Interface extends JFrame {
 
         menuBar.add(menu1);
         menuBar.add(menu2);
-        menu2.add(graphiz);
+        menu2.add(graphviz);
         menu1.add(directed);
         menu1.add(undirected);
         menu1.add(dag);
@@ -600,10 +601,10 @@ public class Interface extends JFrame {
         menu1.add(connected);
         this.setJMenuBar(menuBar);
         menuBar.setVisible(true);
-        graphiz.addActionListener(new ActionListener() {
+        graphviz.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 try {
-                    graph.DotFileToPDFImage(Namegraph);
+                    graph.DotFileToPDF(Namegraph);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -659,6 +660,7 @@ public class Interface extends JFrame {
             addANodeButton.setEnabled(true);
             DOTFormatButton.setEnabled(true);
             transitiveClosureButton.setEnabled(true);
+            showCurrentGraphInButton.setEnabled(true);
             createAnEmptyGraphButton.setEnabled(false);
             frame.dispose();
         } catch (NumberFormatException e) {
@@ -683,6 +685,7 @@ public class Interface extends JFrame {
             addANodeButton.setEnabled(true);
             DOTFormatButton.setEnabled(true);
             transitiveClosureButton.setEnabled(true);
+            showCurrentGraphInButton.setEnabled(true);
             createAnEmptyGraphButton.setEnabled(false);
             frame.dispose();
         } catch (NumberFormatException e) {
@@ -707,6 +710,7 @@ public class Interface extends JFrame {
             addANodeButton.setEnabled(true);
             DOTFormatButton.setEnabled(true);
             transitiveClosureButton.setEnabled(true);
+            showCurrentGraphInButton.setEnabled(true);
             createAnEmptyGraphButton.setEnabled(false);
             frame.dispose();
         } catch (NumberFormatException e) {
@@ -731,6 +735,7 @@ public class Interface extends JFrame {
             addANodeButton.setEnabled(true);
             DOTFormatButton.setEnabled(true);
             transitiveClosureButton.setEnabled(true);
+            showCurrentGraphInButton.setEnabled(true);
             createAnEmptyGraphButton.setEnabled(false);
             frame.dispose();
         } catch (NumberFormatException e) {
@@ -755,6 +760,7 @@ public class Interface extends JFrame {
             addANodeButton.setEnabled(true);
             DOTFormatButton.setEnabled(true);
             transitiveClosureButton.setEnabled(true);
+            showCurrentGraphInButton.setEnabled(true);
             createAnEmptyGraphButton.setEnabled(false);
             frame.dispose();
         } catch (NumberFormatException e) {
@@ -779,6 +785,7 @@ public class Interface extends JFrame {
             addANodeButton.setEnabled(true);
             DOTFormatButton.setEnabled(true);
             transitiveClosureButton.setEnabled(true);
+            showCurrentGraphInButton.setEnabled(true);
             createAnEmptyGraphButton.setEnabled(false);
             frame.dispose();
         } catch (NumberFormatException e) {
@@ -880,6 +887,7 @@ public class Interface extends JFrame {
         panel1.add(addANodeButton, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
         showCurrentGraphInButton = new JButton();
         showCurrentGraphInButton.setBackground(new Color(-8026747));
+        showCurrentGraphInButton.setEnabled(false);
         showCurrentGraphInButton.setForeground(new Color(-1));
         showCurrentGraphInButton.setText("Show current graph in Tree Form");
         panel1.add(showCurrentGraphInButton, new com.intellij.uiDesigner.core.GridConstraints(13, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));

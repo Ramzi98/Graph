@@ -178,6 +178,7 @@
             </constraints>
             <properties>
               <background color="-8026747"/>
+              <enabled value="false"/>
               <foreground color="-1"/>
               <text value="Show current graph in Tree Form"/>
             </properties>
