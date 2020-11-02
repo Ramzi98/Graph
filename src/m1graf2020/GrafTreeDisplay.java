@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 /***
  * TreeExample class is the class who display a graph in Jtree Format
  */
-public class TreeExample extends JFrame
+public class GrafTreeDisplay extends JFrame
 {
     private JTree tree;
     private DefaultMutableTreeNode root;
@@ -20,7 +20,7 @@ public class TreeExample extends JFrame
      * The constructor of Tree
      * @param g is the graph that we create his Jtree Format
      */
-    public TreeExample(Graf g)
+    public GrafTreeDisplay(Graf g)
     {
         this.root = new DefaultMutableTreeNode("Graph");
         EditsTree(g);

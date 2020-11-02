@@ -45,6 +45,7 @@ public class Graf {
      * @param Nodes list of node with successor array formalism
      */
     public Graf(int... Nodes) {
+        System.out.println("hi");
         this.weighted = false;
         int sourceNoude = 1;
         for (int currentNode : Nodes) {
