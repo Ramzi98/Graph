@@ -13,7 +13,7 @@ public class Graf {
     private boolean weighted;
 
     /**
-     * the first constructor is a constructor of an empty symmetric graph
+     * The first constructor is a constructor of an empty symmetric graph
      */
     public Graf() {
         this.weighted = false;
@@ -22,8 +22,7 @@ public class Graf {
     }
 
     /**
-     * the second constructor with a boolean value to allow the user to choose if it's a symmetric of weighted graf
-     *
+     * The second constructor with a boolean value to allow the user to choose if it's a symmetric of weighted graf
      * @param weighted true if it's weighted graph, false else
      */
     public Graf(boolean weighted) {
@@ -34,8 +33,7 @@ public class Graf {
     }
 
     /***
-     * Constructor of a graph
-     *
+     * Constructor of a graph with adjlist given in parameters
      * @param adjList map with node and list of node
      */
     public Graf(Map<Node, List<Node>> adjList) {
@@ -44,7 +42,6 @@ public class Graf {
 
     /***
      * Constructor who create a graph with nodes and edges with successor array formalism
-     *
      * @param Nodes list of node with successor array formalism
      */
     public Graf(int... Nodes) {
@@ -88,7 +85,6 @@ public class Graf {
 
     /**
      * the setter of the private attribute weighted, it can be modified only when the graph is empty
-     *
      * @param weighted the new value of weighted
      * @throws Exceptiongraf don't allow the user to change the type of an no empty graph
      */
@@ -103,8 +99,7 @@ public class Graf {
     // ****************************          Nodes           ************************************************/
 
     /***
-     * Function who return the number of node in graph
-     *
+     * Method that return the number of node in graph
      * @return the number of node in graph
      */
     int nbNodes() {
@@ -112,10 +107,9 @@ public class Graf {
     }
 
     /***
-     * Function who check if the node already exist
-     *
+     * Method that check if the node already exist
      * @param n the node to control
-     * @return a boolean who say the edge exist
+     * @return a boolean who say the edge exist or not
      */
     boolean existsNode(Node n) {
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
@@ -128,10 +122,9 @@ public class Graf {
     }
 
     /***
-     * Overload of the existsNode function
-     *
+     * Overload of the existsNode Method
      * @param id the id node to control
-     * @return a boolean who say the edge exist
+     * @return a boolean who say the edge exist or not
      */
     boolean existsNode(int id) {
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
@@ -144,8 +137,7 @@ public class Graf {
     }
 
     /***
-     * Function who get back the node with an id
-     *
+     * Method that get back the node with an id
      * @param id the id of node to get
      * @return the Node with the id given in the parameters
      */
@@ -158,18 +150,12 @@ public class Graf {
                 }
             }
         }
-        /*else {
-            System.out.println("Node : " + id + "add wit function getNode Does't existe in list of Nodes before ");
-            //addNode(new Node(id, ""));
-        }
-        */
         return null;
     }
 
     /***
-     * Function who add a node
-     *
-     * @param n the node added
+     * Method that add a node to the graph
+     * @param n the node to be added
      */
     void addNode(Node n) {
         if (!existsNode(n)) {
@@ -183,8 +169,7 @@ public class Graf {
     }
 
     /***
-     * Overload of the addNode function
-     *
+     * Overload of the addNode Method
      * @param id the id of node added
      */
     void addNode(int id) {
@@ -193,9 +178,8 @@ public class Graf {
     }
 
     /***
-     * Function who remove one node with one node given in parameters and check if the node exist
-     *
-     * @param n node who we have to remove
+     * Method that remove one node given in parameters
+     * @param n node that we have to remove
      */
     public void removeNode(Node n) {
         for (Node x : this.getAllNodes()) {
@@ -215,8 +199,7 @@ public class Graf {
 
 
     /***
-     * Overload on the removeNode function
-     *
+     * Overload on the removeNode Method
      * @param id the id of node who where remove
      */
     void removeNode(int id) {
@@ -225,8 +208,7 @@ public class Graf {
     }
 
     /***
-     * Function who where we want to know the successors
-     *
+     * Method that where we want to know the successors
      * @param n the node where we want to know the successors
      * @return the list of successors of node n
      */
@@ -240,8 +222,7 @@ public class Graf {
     }
 
     /***
-     * Overload of the getSuccessors function
-     *
+     * Overload of the getSuccessors Method
      * @param id the id of node where we want to know the successors
      * @return the list of successors of node n
      */
@@ -251,11 +232,10 @@ public class Graf {
     }
 
     /***
-     * Function who check if two nodes u and v are adjacent
-     *
+     * Method That check if two nodes u and v are adjacent
      * @param u the 1 st node
      * @param v the 2 nd node
-     * @return a boolean who say the Nodes are adjacent
+     * @return a boolean who say the Nodes are adjacent or not
      */
     boolean adjacent(Node u, Node v) {
         if (existsNode(u) && existsNode(v)) {
@@ -276,11 +256,10 @@ public class Graf {
     }
 
     /***
-     * Overload of the adjacent function
-     *
+     * Overload of the adjacent Method
      * @param idn1 the id of the 1 st node
      * @param idn2 the id of the 2 nd node
-     * @return a boolean who say the Nodes are adjacent
+     * @return a boolean who say the Nodes are adjacent or not
      */
     boolean adjacent(int idn1, int idn2) {
         Node u = getNode(idn1);
@@ -289,8 +268,7 @@ public class Graf {
     }
 
     /***
-     * Function who return a list of all nodes in graph
-     *
+     * Method that return a list of all nodes in graph
      * @return a list of all nodes in graph
      */
     List<Node> getAllNodes() {
@@ -304,8 +282,7 @@ public class Graf {
     // ******************************          Edges           ************************************************/
 
     /***
-     * Function who return the number of edge in graph
-     *
+     * Method that return the number of edge in graph
      * @return the number of edge in graph
      */
     int nbEdges() {
@@ -317,10 +294,9 @@ public class Graf {
     }
 
     /***
-     * Function who check if the edge already exist
-     *
+     * Method that check if the edge already exist
      * @param e the edge to control
-     * @return a boolean who say the edge exist
+     * @return a boolean who say that edge exist or not
      */
     boolean existsEdge(Edge e) {
         List<Node> list;
@@ -336,11 +312,10 @@ public class Graf {
     }
 
     /***
-     * Overload of the existsEdge function
-     *
+     * Overload of the existsEdge Method
      * @param u the Nodefrom to control
      * @param v the Nodeto to control
-     * @return a boolean who say the edge exist
+     * @return a boolean who say that edge exist or not
      */
     boolean existsEdge(Node u, Node v) {
         List<Node> list;
@@ -356,11 +331,10 @@ public class Graf {
     }
 
     /***
-     * Overload of the existsEdge function
-     *
+     * Overload of the existsEdge Method
      * @param idn1 the id of Nodefrom to control
      * @param idn2 the id of Nodeto to control
-     * @return a boolean who say the edge exist
+     * @return a boolean who say that edge exist or not
      */
     boolean existsEdge(int idn1, int idn2) {
         List<Node> list;
@@ -368,7 +342,6 @@ public class Graf {
         if(!(list == null))
         {
             for (Node node : list) {
-                //pour voir s'il existe un edge entre les nodes qui ont les ids idn1 et idn2
                 if (node.getId() == idn2) {
                     return true;
                 }
@@ -382,7 +355,7 @@ public class Graf {
     }
 
     /**
-     * the method that allow us to add an arc between two Nodes using there numbers
+     * Method that allow us to add an arc between two Nodes using there numbers
      * @param x the number of the source Node
      * @param y the number of the destination Node
      */
@@ -396,7 +369,7 @@ public class Graf {
     }
 
     /**
-     * the second method that allow us to add an arc between two Nodes
+     * Method that allow us to add an arc between two Nodes
      * @param from the node source
      * @param to the node destination
      */
@@ -414,25 +387,15 @@ public class Graf {
             this.adjList.put(to,new ArrayList<>());
         }
 
-        // if the node to is already in the list of target of from ( so the edge already exist)
-
-        // Enlver if pour que add multiple edges ca marche
-        //if (!this.adjList.get(from).contains(to))
-        //{
-            // we add it if it doesn't exist
-
-            this.adjList.get(from).add(to);
-
+        this.adjList.get(from).add(to);
             // We add an edge also in the edges array list, if the graph is weighted, we supposed that the weight is 0
-            this.EdgeList.add(new Edge(from,to));
-
-        //}
+        this.EdgeList.add(new Edge(from,to));
 
 
     }
 
     /**
-     * the third method that for creating a new arc, but this method is used only for the weighted graph because it require a weight
+     * Method that for creating a new arc, but this method is used only for the weighted graph because it require a weight
      * @param x the source number Node
      * @param y the destination number Node
      * @param weight the weight
@@ -450,7 +413,7 @@ public class Graf {
     }
 
     /**
-     * the fourth method to adding an arc between two nodes, only used for the weighted graph
+     * Method to add an arc between two nodes, only used for the weighted graph
      * @param from the node source
      * @param to the node destination
      * @param weight the weight of the arc
@@ -473,22 +436,14 @@ public class Graf {
             addNode(to);
         }
 
-        // if the node to is already in the list of target of from ( so the edge already exist)
+        this.adjList.get(from).add(to);
+        this.EdgeList.add(new Edge(from,to,weight));
 
-        // Enlver if pour que add multiple edges ca marche
-        // if (!this.adjList.get(from).contains(to))
-        // {
-            // we add it if it doesn't exist
-
-            this.adjList.get(from).add(to);
-            this.EdgeList.add(new Edge(from,to,weight));
-
-        // }
 
     }
 
     /**
-     * this method allow the user to remove an Edge from the graph using only the numbers of Nodes
+     * Method that allow the user to remove an Edge from the graph using only the numbers of Nodes
      * @param from the number of the Node source
      * @param to the number of the Node destination
      */
@@ -497,7 +452,7 @@ public class Graf {
     }
 
     /**
-     * the second method that allow the user to remove an Edge grom the graph, it use the Nodes
+     * Method that allow the user to remove an Edge grom the graph, it use the Nodes
      * @param from the node source
      * @param to the node destination
      */
@@ -519,8 +474,7 @@ public class Graf {
 
 
     /***
-     * Function who return the list of out edge of node n
-     *
+     * Method that return the list of out edge of node n
      * @param n the node where we want to know the out edge
      * @return the list of out edge of node n
      */
@@ -537,8 +491,7 @@ public class Graf {
     }
 
     /***
-     * Overload of the getOutEdge function
-     *
+     * Overload of the getOutEdge Method
      * @param id the node where we want to know the in edge
      * @return the list of in edge of node n
      */
@@ -548,8 +501,7 @@ public class Graf {
     }
 
     /***
-     * Function who return the list of in edge of node n
-     *
+     * Method That return the list of inedges of node n
      * @param n the node where we want to know the in edge
      * @return the list of in edge of node n
      */
@@ -574,8 +526,7 @@ public class Graf {
     }
 
     /***
-     * Overload of the getInEdge function
-     *
+     * Overload of the getInEdge Method
      * @param id the id of node where we want to know the in edge
      * @return the list of in edge of node n
      */
@@ -585,14 +536,12 @@ public class Graf {
     }
 
     /***
-     * Function who return the list of incident edge of node n
-     *
+     * Method That return the list of incident edge of node n
      * @param n the node where we want to know the incident edge
      * @return the list of incident edge of node n
      */
     List<Edge> getIncidentEdges(Node n) {
-        //récuperer toutes les nodes qui sort et entre vers le node n
-        List<Edge> alledges;// = new ArrayList<Edge>();
+        List<Edge> alledges;
         alledges = getOutEdges(n);
         List<Edge> Inedges = getInEdges(n);
         alledges.addAll(Inedges);
@@ -600,8 +549,7 @@ public class Graf {
     }
 
     /***
-     * Overload of the getIncidentEdges function
-     *
+     * Overload of the getIncidentEdges Method
      * @param id the node where we want to know the in edge
      * @return the list of in edge of node n
      */
@@ -611,8 +559,7 @@ public class Graf {
     }
 
     /***
-     * Function who return a list of all edges in graph
-     *
+     * Method That return the list of all edges in graph
      * @return a list of all edges in graph
      */
     List<Edge> getAllEdges() {
@@ -631,8 +578,7 @@ public class Graf {
     // ******************************          Degrees           ************************************************/
 
     /***
-     * Function who return the inDegree of Node
-     *
+     * Method that return the inDegree of Node
      * @param n the node where we want to know the inDegree
      * @return a inDegree of Node n
      */
@@ -642,8 +588,7 @@ public class Graf {
     }
 
     /***
-     * Overload of the inDegree function
-     *
+     * Overload of the inDegree Method
      * @param id the id of node where we want to know the inDegree
      * @return a inDegree of Node
      */
@@ -653,8 +598,7 @@ public class Graf {
     }
 
     /***
-     * Function who return a outDegree of Node
-     *
+     * Method that return a outDegree of Node
      * @param n the node where we want to know the outDegree
      * @return a outDegree of Node n
      */
@@ -664,8 +608,7 @@ public class Graf {
     }
 
     /***
-     * Overload of the outDegree function
-     *
+     * Overload of the outDegree Method
      * @param id the id of node where we want to know the outDegree
      * @return a outDegree of Node
      */
@@ -675,8 +618,7 @@ public class Graf {
     }
 
     /***
-     * Function who return a Degree of Node
-     *
+     * Method that return a Degree of Node
      * @param n the node where we want to know the Degree
      * @return a Degree of Node n
      */
@@ -685,8 +627,7 @@ public class Graf {
     }
 
     /***
-     * Overload of the Degree function
-     *
+     * Overload of the Degree Method
      * @param id the id of node where we want to know the Degree
      * @return a Degree of Node
      */
@@ -698,14 +639,11 @@ public class Graf {
     // ******************************           Graph Representation           ************************************************/
 
     /***
-     * Function who realize a successor array
-     *
-     * @return an array for obtaining a representation of the graph in the successor array formalism
+     * Method That generates a successor array
+     * @return an array representation of the graph
      */
     int[] toSuccessorArray() {
-        sortMapNodeByKey();
-        int nb_edge = nbEdges();
-        int taille = nb_edge + nbNodes();
+        int taille = nbEdges() + nbNodes();
         int[] SA = new int[taille];
         int j = 0;
         for (Map.Entry<Node, List<Node>> entry : adjList.entrySet()) {
@@ -721,14 +659,11 @@ public class Graf {
     }
 
     /***
-     * Function who create an adjacency matrix with the graph given
-     *
-     * @return the matrix of the given graph
+     * Method that create an adjacency matrix with the graph given
+     * @return the Adjacency matrix of the given graph
      */
     int[][] toAdjMatrix() {
-        sortMapNodeByKey();
-        List<Edge> edges = getAllEdges();
-        List<Node> nodes = getAllNodes();
+        Collections.sort(getAllNodes());
         int nbr_node = nbNodes();
         int[][] adjMatrix = new int[nbr_node][nbr_node];
         int [] successorArray = toSuccessorArray();
@@ -754,74 +689,13 @@ public class Graf {
         return adjMatrix;
     }
 
-
-    /***
-     * Function who sort one list by number
-     * @param n the list of Nodes to be sorted
-     */
-    public void sortListNode(List<Node> n) {
-        Collections.sort(n, new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                if (o1.getId() > o2.getId()) {
-                    return 1;
-                }
-                if (o1.getId() < o2.getId()) {
-                    return -1;
-                }
-                return 0;
-            }
-        });
-    }
-
-    /***
-     * Function who sort the map adjList by key and sort the list of the associated value
-     */
-    public void sortMapNodeByKey() {
-        Map<Node, List<Node>> current = adjList;
-        Map<Node, List<Node>> lmap = new TreeMap<>(
-                new Comparator<>() {
-                    @Override
-                    public int compare(Node o1, Node o2) {
-                        if (o1.getId() > o2.getId()) {
-                            return 1;
-                        }
-                        if (o1.getId() < o2.getId()) {
-                            return -1;
-                        }
-                        return 0;
-                    }
-                }
-        );
-        lmap.putAll(current);
-        for (Map.Entry<Node, List<Node>> entry : adjList.entrySet()) {
-            sortListNode(entry.getValue());
-        }
-        adjList = lmap;
-    }
-
-
-    public List<Edge> sortListOfEdge() {
-        List<Edge> listEdge = getAllEdges();
-        Collections.sort(listEdge, new Comparator<>() {
-            @Override
-            public int compare(Edge o1, Edge o2) {
-                return o1.compareTo(o2);
-            }
-        });
-        return listEdge;
-    }
-
-
     // ******************************           Graph Transformation           ************************************************/
 
     /***
-     *  Function who realize a new reversed graph with one graph given
-     *
-     * @return the reverse graph given
+     * Method that generates a new reversed graph from a given graph
+     * @return a new graph represent the reverse of graph given
      */
     Graf getReverse() {
-        //pour calculer le nouveau graph inverse
         Graf reverseGraf = new Graf();
         Map<Node, List<Node>> newadjList = new HashMap<>();
         List<Edge> edges;
@@ -841,8 +715,7 @@ public class Graf {
     }
 
     /**
-     * the method that allow the user to get the transitive closure of a graph
-     *
+     * Method that allow the user to get the transitive closure of a graph
      * @return a new graph represent the transitive closure of a graph
      */
     public Graf getTransitiveClosure() throws Exceptiongraf {
@@ -911,34 +784,10 @@ public class Graf {
 
     }
 
-
-    /***
-     * Function who realize a graph with adjacency matrix
-     *
-     * @param adjMatrix an adjacency matrix
-     * @return a graph with one adjacency matrix given in parameters
-     */
-    public Graf adjMatrixToGraf(int[][] adjMatrix) {
-        Graf g = new Graf();
-        int lgtAdjMatrix = adjMatrix.length;
-        for (int i = 0; i < lgtAdjMatrix; i++) {
-            for (int j = 0; j < lgtAdjMatrix; j++) {
-                if (adjMatrix[i][j] == 1) {
-                    Node n1 = new Node(i);
-                    Node n2 = new Node(j);
-                    g.addEdge(n1, n2);
-                }
-            }
-        }
-        return g;
-    }
-
-
     // ******************************           Graph Traversal           ************************************************/
 
     /**
-     * the method that allow the user to get the Depth First Search ( DFS ) of a graph
-     *
+     * Method that allow the user to get the Depth First Search ( DFS ) of a graph
      * @return a list of Node that represent the DFS algorithm
      */
     public List<Node> getDFS() {
@@ -987,8 +836,7 @@ public class Graf {
     }
 
     /**
-     * this method allow the user to get the Breadth-first search of the graph ( BFS )
-     *
+     * Method that allow the user to get the Breadth-first search of the graph ( BFS )
      * @return a list of node that represent the BFS
      */
     public List<Node> getBFS() {
@@ -1040,7 +888,6 @@ public class Graf {
 
     /***
      * Function who create a dot format of a graph given
-     *
      * @return a string of a dot representation
      */
     String toDotString() {
@@ -1054,30 +901,12 @@ public class Graf {
             }
             else
             {
-
-                //int i =0;
-                //dotStringGraph += " " + nodeFrom + " -> " ;
+                Collections.sort(entry.getValue());
                 for (Node nod : entry.getValue()) {
                     int nodeto = nod.getId();
                     dotStringGraph += " " + nodeFrom + " -> " + nodeto + "; \n";
                 }
-                /*
-                    i++;
-
-                    if(i == entry.getValue().size())
-                    {
-                        dotStringGraph += " " + nodeto;
-                    }
-                    else
-                    {
-                        dotStringGraph += " " + nodeto + ",";
-                    }
-                }
-                dotStringGraph += ";\n";
-
-                 */
             }
-
         }
 
         dotStringGraph += "}";
@@ -1085,33 +914,32 @@ public class Graf {
     }
 
     /***
-     * Function who read a file with dot formalism and create a graph
-     *
-     * @param path of the dot file
+     * Method that read a dot file and generates a graph equivalent
+     * @param path the absolute path of the dot file
      * @return a graph
      */
     public static Graf DotFileToGraph(String path) {
-        List<String> listDot = new  ArrayList<>();
+        List<String> list = new  ArrayList<>();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(path));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             String line;
-            while ((line = br.readLine()) != null) {
-                listDot.add(line);
+            while ((line = bufferedReader.readLine()) != null) {
+                list.add(line);
             }
-            br.close();
+            bufferedReader.close();
         } catch (Exception e) {
-            System.out.println("Could not open the dot file.");
+            e.printStackTrace();
         }
 
-        int nbLineDotFile = listDot.size();
+        int nbr_line = list.size();
         Graf g = null;
 
-        for (int i = 0; i < nbLineDotFile; i++) {
-            if (listDot.get(i).equals("\n")) {
+        for (int i = 0; i < nbr_line; i++) {
+            if (list.get(i).equals("\n")) {
                 continue;
             }
             if (i == 0) {
-                String[] line1 = listDot.get(i).split(" ");
+                String[] line1 = list.get(i).split(" ");
                 if (line1[0].equals("digraph")) {
                     g = new Graf();
                 }
@@ -1119,8 +947,8 @@ public class Graf {
                     g = new UndirectedGraf();
                 }
             }
-            String[] Str = listDot.get(i).split(" ");
-            if (i != 0 && i != nbLineDotFile-1) {
+            String[] Str = list.get(i).split(" ");
+            if (i != 0 && i != nbr_line-1) {
                 if (Str.length < 3) {
                     String [] Node1 = Str[1].split(";");
                     Node n1 = new Node(Integer.parseInt(Node1[0]));
@@ -1136,12 +964,10 @@ public class Graf {
                 }
             }
         }
-
         return g;
     }
     /**
-     * this method convert the graph into DOT format and stock it in a the DOT repository
-     *
+     * Method that convert the graph into DOT format and stock it in a the DOT repository
      * @param name the name of the file .dot
      * @throws IOException the exception for manipulating the files
      */
@@ -1160,7 +986,7 @@ public class Graf {
 
 
     /***
-     * Create a PDF Image of a given graph with the DOT file
+     * Create a PDF Image of a graph with there DOT file
      * @param graphname the name of the graph
      */
     public void DotFileToPDF(String graphname) throws IOException {
