@@ -8,10 +8,12 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import static java.awt.GridBagConstraints.HORIZONTAL;
 import static java.awt.GridBagConstraints.REMAINDER;
+import static m1graf2020.Graf.DotFileToGraph;
 
 /***
  * The interface class of our project of graph
@@ -581,6 +583,7 @@ public class Interface extends JFrame {
         JMenuItem graphviz = new JMenuItem("Display Graphviz");
         JMenu menu1 = new JMenu("Generate");
         JMenu menu3 = new JMenu("Divers");
+        JMenu menu4 = new JMenu("Import Graph");
         JMenuItem directed = new JMenuItem("Directed graph");
         JMenuItem undirected = new JMenuItem("Undirected graph");
         JMenuItem dag = new JMenuItem("DAG graph");
@@ -588,12 +591,14 @@ public class Interface extends JFrame {
         JMenuItem dense = new JMenuItem("Dense graph");
         JMenuItem connected = new JMenuItem("Connected graph");
         JMenuItem SuccessorArray = new JMenuItem("Successor Array");
+        JMenuItem Import = new JMenuItem("Import from file");
         JMenuItem nodesDisplay = new JMenuItem("Get all nodes");
         JMenuItem edgesDisplay = new JMenuItem("Get all edges");
 
         menuBar.add(menu1);
         menuBar.add(menu2);
         menuBar.add(menu3);
+        menuBar.add(menu4);
         menu2.add(graphviz);
         menu1.add(directed);
         menu1.add(undirected);
@@ -604,6 +609,7 @@ public class Interface extends JFrame {
         menu3.add(SuccessorArray);
         menu3.add(nodesDisplay);
         menu3.add(edgesDisplay);
+        menu4.add(Import);
 
         this.setJMenuBar(menuBar);
         menuBar.setVisible(true);
@@ -614,6 +620,13 @@ public class Interface extends JFrame {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        Import.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImportEvt(e);
             }
         });
 
@@ -713,6 +726,31 @@ public class Interface extends JFrame {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
+
+    }
+
+    private void ImportEvt(ActionEvent evt) {
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String path = selectedFile.getAbsolutePath();
+            graph = DotFileToGraph(path);
+            String name = selectedFile.getName().split("\\.")[0];
+            Namegraph = name;
+            addANodeButton.setEnabled(true);
+            DFSFormButton.setEnabled(true);
+            BFSFormButton.setEnabled(true);
+            removeAnEdgeButton.setEnabled(true);
+            removeANodeButton.setEnabled(true);
+            reverseTheGraphButton.setEnabled(true);
+            addAnEdgeButton.setEnabled(true);
+            addANodeButton.setEnabled(true);
+            DOTFormatButton.setEnabled(true);
+            transitiveClosureButton.setEnabled(true);
+            showCurrentGraphInButton.setEnabled(true);
+            createAnEmptyGraphButton.setEnabled(false);
+        }
 
     }
 

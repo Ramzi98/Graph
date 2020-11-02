@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/m1graf2020/forms_rt.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/forms_rt.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

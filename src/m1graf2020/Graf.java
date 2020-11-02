@@ -1106,7 +1106,6 @@ public class Graf {
         int nbLineDotFile = listDot.size();
         Graf g = null;
 
-
         for (int i = 0; i < nbLineDotFile; i++) {
             if (listDot.get(i).equals("\n")) {
                 continue;
@@ -1120,17 +1119,17 @@ public class Graf {
                     g = new UndirectedGraf();
                 }
             }
-            String[] arrOfStr = listDot.get(i).split(" ");
+            String[] Str = listDot.get(i).split(" ");
             if (i != 0 && i != nbLineDotFile-1) {
-                if (arrOfStr.length < 3) {
-                    String [] arrOfStrNode = arrOfStr[1].split(";");
-                    Node n1 = new Node(Integer.parseInt(arrOfStrNode[0]));
+                if (Str.length < 3) {
+                    String [] Node1 = Str[1].split(";");
+                    Node n1 = new Node(Integer.parseInt(Node1[0]));
                     g.addNode(n1);
                 }
-                if (arrOfStr.length >= 3) {
-                    String [] arrOfStrEdge = arrOfStr[3].split(";");
-                    Node n1 = new Node(Integer.parseInt(arrOfStr[1]));
-                    Node n2 = new Node(Integer.parseInt(arrOfStrEdge[0]));
+                if (Str.length >= 3) {
+                    String [] Node2 = Str[3].split(";");
+                    Node n1 = new Node(Integer.parseInt(Str[1]));
+                    Node n2 = new Node(Integer.parseInt(Node2[0]));
                     g.addNode(n1);
                     g.addNode(n2);
                     g.addEdge(n1, n2);
@@ -1178,6 +1177,7 @@ public class Graf {
             e.printStackTrace();
         }
     }
+
 }
 
 
