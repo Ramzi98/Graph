@@ -984,10 +984,10 @@ public class Graf {
 
     public void toDotFile(String name) throws IOException {
         String workingDir = System.getProperty("user.dir");
-        String dir = workingDir+"\\DOT";
+        String dir = workingDir+File.separator+"DOT";
         File file = new File(dir);
         file.mkdirs();
-        File f = new File( dir+"\\"+name + ".dot");
+        File f = new File( file+File.separator+name+ ".dot");
         FileWriter fw = new FileWriter(f);
         fw.write(this.toDotString());
         fw.close();
@@ -1002,13 +1002,13 @@ public class Graf {
     public void DotFileToPDF(String graphname) throws IOException {
         toDotFile(graphname);
         String workingDir = System.getProperty("user.dir");
-        String dir = workingDir+"\\DOT\\";
-        String pdfdir = workingDir+"\\PDF\\";
+        String dir = workingDir+File.separator+"DOT"+File.separator;
+        String pdfdir = workingDir+File.separator+"PDF"+File.separator;
         File file = new File(pdfdir);
         file.mkdirs();
 
         try {
-            Runtime.getRuntime().exec("dot -Tpdf "+dir+graphname+".dot -o "+pdfdir+graphname+".pdf");
+            Runtime.getRuntime().exec("dot -Tpdf "+dir+graphname+".dot -o "+file+File.separator+graphname+".pdf");
             sleep(500);
             if(Desktop.getDesktop().isSupported(java.awt.Desktop.Action.OPEN)){
                 try {
