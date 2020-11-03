@@ -11,22 +11,23 @@
  
 === Content ===
  
-1- Class Node.java: The file that represente the implementation of the class Node, it represente a Node of a graph who's identified by his number and facultatif name.
+1- Class Node.java              : The file that represente the implementation of the class Node, it represente a Node of a graph who's identified by his number and facultatif name.
  
-2- Class Edge.java: The file that represente the implementation of the class Edge, it represente an edge between two Nodes, the source node and the the node destination. An edge can have a weidgt, and can be unweighted.
+2- Class Edge.java              : The file that represente the implementation of the class Edge, it represente an edge between two Nodes, the source node and the the node destination. An edge can have a weidgt, and can be unweighted.
  
-3- Class Graf.java: the file that represente the implementation of the class Graf, it represente a graph with all it's options, it can be a weighted graph or symmetric graph, this file use the Node and the Edge files.
+3- Class Graf.java              : the file that represente the implementation of the class Graf, it represente a graph with all it's options, it can be a weighted graph or symmetric graph, this file use the Node and the Edge files.
  
-4- Class UndirectedGraf.java: the file that represente the implementation of the class UndirectedGraf, it represnete an undirected graph, it can be a weighted undirected graph, or symmetric graph, this file use the Node and the Edge and the Graf files.
+4- Class UndirectedGraf.java    : the file that represente the implementation of the class UndirectedGraf, it represnete an undirected graph, it can be a weighted undirected graph, or symmetric graph, this file use the Node and the Edge and the Graf files.
  
-5- ClassExceptiongraf.java: this file represente the implementation of the class Exceptiongraf, it represente an exception that's used in the files Graf.java and UndirectedGraf.java.
+5- ClassExceptiongraf.java      : this file represente the implementation of the class Exceptiongraf, it represente an exception that's used in the files Graf.java and UndirectedGraf.java.
  
-6- Class RandomGraf.java: this file represente the creation of Random graphs, it use the Graf.java and UndirectedGraf.java files.
+6- Class RandomGraf.java        : this file represente the creation of Random graphs, it use the Graf.java and UndirectedGraf.java files.
  
-6- Class GrafTreeDisplay.java: this file represente the JTree view of the graph.
+6- Class GrafTreeDisplay.java   : this file represente the JTree view of the graph.
  
-8- Class Interface.java: this file represente the creation of the graphical interface using the itnerface.form file, it represent the interactive menu of the manipulation of the library, it use RandomGraf and both of Graf.java and UndirectedGraf.java files.
- 
+8- Class Interface.java         : this file represente the creation of the graphical interface using the itnerface.form file, it represent the interactive menu of the manipulation of the library, it use RandomGraf and both of Graf.java and UndirectedGraf.java files.
+
+9- File makefile	            : the makefile to manage (compile, clean, run) the project
  
 === Library Usage ===
  
@@ -37,11 +38,11 @@ A simple interface is also avaible to use, it's gives an interactive menu to the
 To use the IHM, all what u have to do is to run the commande "make" into your terminal, to delete the generated class, you have to run "make clean" commande into your terminal.
  
  
-=== Folders ===
+=== Directories ===
  
  
-1)DOT: the repository where we store the graph in the DOT format.
+1)DOT       : the repository where we store the graph in the DOT format.
  
-2)PDF: The repository where we store the graph in the PDF format.
+2)PDF       : The repository where we store the graph in the PDF format.
  
-3)Javadoc: the repository that store the documentation of the library in the format javadoc.
+3)Javadoc   : the repository that store the documentation of the library in the format javadoc.
