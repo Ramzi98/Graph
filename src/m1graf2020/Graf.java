@@ -1,7 +1,11 @@
 package m1graf2020;
 
+import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 /**
  * The Graf class, it represent the graph and the creation of the nodes, edges and manipulation of directed graph
@@ -45,32 +49,37 @@ public class Graf {
      * @param Nodes list of node with successor array formalism
      */
     public Graf(int... Nodes) {
-        System.out.println("hi");
         this.weighted = false;
-        int sourceNoude = 1;
-        for (int currentNode : Nodes) {
-            if (currentNode == 0) {
-                if (!existsNode(sourceNoude)) {
-                    List<Node> emptyList = new ArrayList<>();
-                    adjList.put(new Node(sourceNoude, ""), emptyList);
+        int id_src_noude = 1;
+        for (int id_current_node : Nodes)
+        {
+            if (id_current_node == 0)
+            {
+                if (!existsNode(id_src_noude))
+                {
+                    List<Node> list = new ArrayList<>();
+                    adjList.put(new Node(id_src_noude, ""), list);
                 }
-                sourceNoude++;
+                id_src_noude++;
                 continue;
             }
-            if (!existsNode(sourceNoude)) {
-                List<Node> emptyList = new ArrayList<>();
-                Node newNoued = new Node(currentNode, "");
-                emptyList.add(newNoued);
-                adjList.put(new Node(sourceNoude, ""), emptyList);
-            } else {
-                List<Node> newList = new ArrayList<>();
-                Node newNoued = new Node(currentNode, "");
-                Node node = getNode(sourceNoude);
-                for (Node n : getSuccessors(node)) {
-                    newList.add(n);
+            if (!existsNode(id_src_noude))
+            {
+                List<Node> list = new ArrayList<>();
+                Node new_node = new Node(id_current_node, "");
+                list.add(new_node);
+                adjList.put(new Node(id_src_noude, ""), list);
+            } else
+                {
+                List<Node> list = new ArrayList<>();
+                Node new_node = new Node(id_current_node, "");
+                Node node = getNode(id_src_noude);
+                for (Node n : getSuccessors(node))
+                {
+                    list.add(n);
                 }
-                newList.add(newNoued);
-                adjList.put(node, newList);
+                list.add(new_node);
+                adjList.put(node, list);
             }
         }
     }
@@ -164,7 +173,7 @@ public class Graf {
             adjList.put(n, emptyList);
             //System.out.println("Noued add with function(addNode) => Name : " + n.getName() + " ; ID : " + n.getId());
         } else {
-            System.out.println("Noued existe deja");
+            System.out.println("Node already existing");
         }
 
     }
@@ -1000,6 +1009,14 @@ public class Graf {
 
         try {
             Runtime.getRuntime().exec("dot -Tpdf "+dir+graphname+".dot -o "+pdfdir+graphname+".pdf");
+            sleep(500);
+            if(Desktop.getDesktop().isSupported(java.awt.Desktop.Action.OPEN)){
+                try {
+                    java.awt.Desktop.getDesktop().open(new File(pdfdir+graphname+".pdf"));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
