@@ -22,7 +22,6 @@ public class Graf {
     public Graf() {
         this.weighted = false;
         this.adjList = new HashMap<>();
-        this.EdgeList = new ArrayList<>();
     }
 
     /**
@@ -33,7 +32,6 @@ public class Graf {
         // we give the choice to the user to determine if the graph is weighted ou symmetric
         this.weighted = weighted;
         this.adjList = new HashMap<>();
-        this.EdgeList = new ArrayList<>();
     }
 
     /***
@@ -583,16 +581,7 @@ public class Graf {
      * @return a list of all edges in graph
      */
     public List<Edge> getAllEdges() {
-        List<Edge> alledges = new ArrayList<>();
-        List<Node> nodes = getAllNodes();
-        List<Edge> edgeList;
-        for (Node node : nodes) {
-            edgeList = getOutEdges(node);
-            alledges.addAll(edgeList);
-
-        }
-        EdgeList = alledges;
-        return alledges;
+      return EdgeList;
     }
 
     // ******************************          Degrees           ************************************************/
