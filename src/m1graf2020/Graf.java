@@ -22,6 +22,7 @@ public class Graf {
     public Graf() {
         this.weighted = false;
         this.adjList = new HashMap<>();
+        this.EdgeList = new ArrayList<>();
     }
 
     /**
@@ -32,6 +33,7 @@ public class Graf {
         // we give the choice to the user to determine if the graph is weighted ou symmetric
         this.weighted = weighted;
         this.adjList = new HashMap<>();
+        this.EdgeList = new ArrayList<>();
     }
 
     /***
@@ -40,7 +42,6 @@ public class Graf {
      */
     public Graf(Map<Node, List<Node>> adjList) {
         this.adjList = new HashMap<>();
-        this.adjList = adjList;
     }
 
     /***
@@ -84,15 +85,6 @@ public class Graf {
     }
 
     /**
-     * the getter of the private adjList
-     *
-     * @return the value of adjList
-     */
-    public Map<Node, List<Node>> getAdjList() {
-        return adjList;
-    }
-
-    /**
      * the getter of the private attribute weighted
      *
      * @return the value of weighted
@@ -120,7 +112,7 @@ public class Graf {
      * Method that return the number of node in graph
      * @return the number of node in graph
      */
-    public int nbNodes() {
+    int nbNodes() {
         return adjList.size();
     }
 
@@ -129,7 +121,7 @@ public class Graf {
      * @param n the node to control
      * @return a boolean who say the edge exist or not
      */
-    public boolean existsNode(Node n) {
+    boolean existsNode(Node n) {
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
             if (nodes.getKey().equals(n)) {
                 return true;
@@ -144,7 +136,7 @@ public class Graf {
      * @param id the id node to control
      * @return a boolean who say the edge exist or not
      */
-    public boolean existsNode(int id) {
+    boolean existsNode(int id) {
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
             Node n = nodes.getKey();
             if (n.getId() == id) {
@@ -159,7 +151,7 @@ public class Graf {
      * @param id the id of node to get
      * @return the Node with the id given in the parameters
      */
-    public Node getNode(int id) {
+    Node getNode(int id) {
         if (existsNode(id)) {
             for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
                 Node n = nodes.getKey();
@@ -175,7 +167,7 @@ public class Graf {
      * Method that add a node to the graph
      * @param n the node to be added
      */
-    public void addNode(Node n) {
+    void addNode(Node n) {
         if (!existsNode(n)) {
             List<Node> emptyList = new ArrayList<>();
             adjList.put(n, emptyList);
@@ -190,7 +182,7 @@ public class Graf {
      * Overload of the addNode Method
      * @param id the id of node added
      */
-    public void addNode(int id) {
+    void addNode(int id) {
         Node node = new Node(id);
         addNode(node);
     }
@@ -220,7 +212,7 @@ public class Graf {
      * Overload on the removeNode Method
      * @param id the id of node who where remove
      */
-    public void removeNode(int id) {
+    void removeNode(int id) {
         Node node = getNode(id);
         removeNode(node);
     }
@@ -230,7 +222,7 @@ public class Graf {
      * @param n the node where we want to know the successors
      * @return the list of successors of node n
      */
-    public List<Node> getSuccessors(Node n) {
+    List<Node> getSuccessors(Node n) {
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
             if (nodes.getKey().equals(n)) {
                 return nodes.getValue();
@@ -244,7 +236,7 @@ public class Graf {
      * @param id the id of node where we want to know the successors
      * @return the list of successors of node n
      */
-    public List<Node> getSuccessors(int id) {
+    List<Node> getSuccessors(int id) {
         Node n = getNode(id);
         return getSuccessors(n);
     }
@@ -255,7 +247,7 @@ public class Graf {
      * @param v the 2 nd node
      * @return a boolean who say the Nodes are adjacent or not
      */
-    public boolean adjacent(Node u, Node v) {
+    boolean adjacent(Node u, Node v) {
         if (existsNode(u) && existsNode(v)) {
             List<Node> successors_of_u = getSuccessors(u);
             for (Node node : successors_of_u) {
@@ -279,7 +271,7 @@ public class Graf {
      * @param idn2 the id of the 2 nd node
      * @return a boolean who say the Nodes are adjacent or not
      */
-    public boolean adjacent(int idn1, int idn2) {
+    boolean adjacent(int idn1, int idn2) {
         Node u = getNode(idn1);
         Node v = getNode(idn2);
         return adjacent(u, v);
@@ -289,7 +281,7 @@ public class Graf {
      * Method that return a list of all nodes in graph
      * @return a list of all nodes in graph
      */
-    public List<Node> getAllNodes() {
+    List<Node> getAllNodes() {
         List<Node> AllNodes = new ArrayList<>();
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
             AllNodes.add(nodes.getKey());
@@ -303,7 +295,7 @@ public class Graf {
      * Method that return the number of edge in graph
      * @return the number of edge in graph
      */
-    public int nbEdges() {
+    int nbEdges() {
         int nbr = 0;
         for (Map.Entry<Node, List<Node>> nodes : adjList.entrySet()) {
             nbr += nodes.getValue().size();
@@ -316,7 +308,7 @@ public class Graf {
      * @param e the edge to control
      * @return a boolean who say that edge exist or not
      */
-    public boolean existsEdge(Edge e) {
+    boolean existsEdge(Edge e) {
         List<Node> list;
         list = getSuccessors(e.getStartnode());
         if (!(list == null)) {
@@ -335,7 +327,7 @@ public class Graf {
      * @param v the Nodeto to control
      * @return a boolean who say that edge exist or not
      */
-    public boolean existsEdge(Node u, Node v) {
+    boolean existsEdge(Node u, Node v) {
         List<Node> list;
         list = getSuccessors(u);
         if (!(list == null)) {
@@ -354,7 +346,7 @@ public class Graf {
      * @param idn2 the id of Nodeto to control
      * @return a boolean who say that edge exist or not
      */
-    public boolean existsEdge(int idn1, int idn2) {
+    boolean existsEdge(int idn1, int idn2) {
         List<Node> list;
         list = getSuccessors(idn1);
         if(!(list == null))
@@ -496,7 +488,7 @@ public class Graf {
      * @param n the node where we want to know the out edge
      * @return the list of out edge of node n
      */
-    public List<Edge> getOutEdges(Node n) {
+    List<Edge> getOutEdges(Node n) {
         List<Edge> edges = new ArrayList<>();
         if (existsNode(n)) {
             List<Node> successors = getSuccessors(n);
@@ -513,7 +505,7 @@ public class Graf {
      * @param id the node where we want to know the in edge
      * @return the list of in edge of node n
      */
-    public List<Edge> getOutEdges(int id) {
+    List<Edge> getOutEdges(int id) {
         Node n = getNode(id);
         return getOutEdges(n);
     }
@@ -523,7 +515,7 @@ public class Graf {
      * @param n the node where we want to know the in edge
      * @return the list of in edge of node n
      */
-    public List<Edge> getInEdges(Node n) {
+    List<Edge> getInEdges(Node n) {
         List<Node> nodes = getAllNodes();
         List<Node> successors;
         List<Edge> edges = new ArrayList<>();
@@ -548,7 +540,7 @@ public class Graf {
      * @param id the id of node where we want to know the in edge
      * @return the list of in edge of node n
      */
-    public List<Edge> getInEdges(int id) {
+    List<Edge> getInEdges(int id) {
         Node n = getNode(id);
         return getInEdges(n);
     }
@@ -558,7 +550,7 @@ public class Graf {
      * @param n the node where we want to know the incident edge
      * @return the list of incident edge of node n
      */
-    public List<Edge> getIncidentEdges(Node n) {
+    List<Edge> getIncidentEdges(Node n) {
         List<Edge> alledges;
         alledges = getOutEdges(n);
         List<Edge> Inedges = getInEdges(n);
@@ -571,7 +563,7 @@ public class Graf {
      * @param id the node where we want to know the in edge
      * @return the list of in edge of node n
      */
-    public List<Edge> getIncidentEdges(int id) {
+    List<Edge> getIncidentEdges(int id) {
         Node n = getNode(id);
         return getIncidentEdges(n);
     }
@@ -580,8 +572,8 @@ public class Graf {
      * Method That return the list of all edges in graph
      * @return a list of all edges in graph
      */
-    public List<Edge> getAllEdges() {
-      return EdgeList;
+    List<Edge> getAllEdges() {
+       return EdgeList;
     }
 
     // ******************************          Degrees           ************************************************/
@@ -591,7 +583,7 @@ public class Graf {
      * @param n the node where we want to know the inDegree
      * @return a inDegree of Node n
      */
-    public int inDegree(Node n) {
+    int inDegree(Node n) {
         List<Edge> edges = getInEdges(n);
         return edges.size();
     }
@@ -601,7 +593,7 @@ public class Graf {
      * @param id the id of node where we want to know the inDegree
      * @return a inDegree of Node
      */
-    public int inDegree(int id) {
+    int inDegree(int id) {
         Node node = getNode(id);
         return inDegree(node);
     }
@@ -611,7 +603,7 @@ public class Graf {
      * @param n the node where we want to know the outDegree
      * @return a outDegree of Node n
      */
-    public int outDegree(Node n) {
+    int outDegree(Node n) {
         List<Edge> edges = getOutEdges(n);
         return edges.size();
     }
@@ -621,7 +613,7 @@ public class Graf {
      * @param id the id of node where we want to know the outDegree
      * @return a outDegree of Node
      */
-    public int outDegree(int id) {
+    int outDegree(int id) {
         Node node = getNode(id);
         return outDegree(node);
     }
@@ -631,7 +623,7 @@ public class Graf {
      * @param n the node where we want to know the Degree
      * @return a Degree of Node n
      */
-    public int degree(Node n) {
+    int degree(Node n) {
         return inDegree(n) + outDegree(n);
     }
 
@@ -640,7 +632,7 @@ public class Graf {
      * @param id the id of node where we want to know the Degree
      * @return a Degree of Node
      */
-    public int degree(int id) {
+    int degree(int id) {
         Node node = getNode(id);
         return degree(node);
     }
@@ -651,7 +643,7 @@ public class Graf {
      * Method That generates a successor array
      * @return an array representation of the graph
      */
-    public int[] toSuccessorArray() {
+    int[] toSuccessorArray() {
         int taille = nbEdges() + nbNodes();
         int[] SA = new int[taille];
         int j = 0;
@@ -671,7 +663,7 @@ public class Graf {
      * Method that create an adjacency matrix with the graph given
      * @return the Adjacency matrix of the given graph
      */
-    public int[][] toAdjMatrix() {
+    int[][] toAdjMatrix() {
         Collections.sort(getAllNodes());
         int nbr_node = nbNodes();
         int[][] adjMatrix = new int[nbr_node][nbr_node];
@@ -704,7 +696,7 @@ public class Graf {
      * Method that generates a new reversed graph from a given graph
      * @return a new graph represent the reverse of graph given
      */
-    public Graf getReverse() {
+    Graf getReverse() {
         Graf reverseGraf = new Graf();
         Map<Node, List<Node>> newadjList = new HashMap<>();
         List<Edge> edges;
@@ -899,7 +891,7 @@ public class Graf {
      * Function who create a dot format of a graph given
      * @return a string of a dot representation
      */
-    public String toDotString() {
+    String toDotString() {
         String dotStringGraph = "digraph g {\n";
 
         for (Map.Entry<Node, List<Node>> entry : adjList.entrySet()) {
