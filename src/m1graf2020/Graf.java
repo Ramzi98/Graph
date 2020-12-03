@@ -663,31 +663,42 @@ public class Graf {
      * Method that create an adjacency matrix with the graph given
      * @return the Adjacency matrix of the given graph
      */
-    public int[][] toAdjMatrix() {
-        Collections.sort(getAllNodes());
-        int nbr_node = nbNodes();
-        int[][] adjMatrix = new int[nbr_node][nbr_node];
-        int [] successorArray = toSuccessorArray();
-        int SAlength = successorArray.length;
-        //initialisation
-        for (int i = 0; i < nbr_node; i++) {
-            for (int j = 0; j < nbr_node; j++) {
-                adjMatrix[i][j] = 0;
-            }
+    public int[][] toMatrix(){
+        ArrayList<Node> l;
+        l = (ArrayList<Node>) this.getAllNodes();
+        int x = 0;
+        for(Node n : l) {
+            if(x<n.getId()) x=n.getId();
         }
-        int sourcenode = 1;
-        for (int i = 0; i < SAlength ; i++) {
-            if(successorArray[i] == 0)
-            {
-                sourcenode++;
-            }
-            else
-            {
-                adjMatrix[sourcenode-1][successorArray[i]-1]++;
+        int[][] matrix=new int[x][x];
+
+        // initsialize the matrix
+
+        for (int i=0;i<x;i++) {
+            for(int j=0;j<x;j++) {
+                matrix[i][j]=0;
             }
         }
 
-        return adjMatrix;
+        //  implimants the Adjacancy Matrix
+
+        for (Node n: l) {
+            for (Node node:this.adjList.get(n)) {
+                Edge e1 = null;
+                List<Edge> le = getAllEdges();
+                for(Edge e : le)
+                {
+                    if(e.getEndnode().equals(node) && e.getStartnode().equals(n))
+                    {
+                        e1 = e;
+                    }
+                }
+
+                matrix[n.getId()-1][node.getId()-1]= e1.getWeight();
+            }
+
+        }
+        return matrix;
     }
 
 
